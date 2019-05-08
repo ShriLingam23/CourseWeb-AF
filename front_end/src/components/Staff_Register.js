@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
-import { Alert } from 'reactstrap';
+import { Alert ,Spinner} from 'reactstrap';
 
 import logo from '../components/logo.svg'
 import { MdEmail } from "react-icons/md";
@@ -19,6 +19,7 @@ class Staff_Register extends Component{
         // this.toggle = this.toggle.bind(this);
         this.state = { 
             visible: false,
+            pending: true,
             fullName:'',
             email:'',
             password:'',
@@ -34,6 +35,7 @@ class Staff_Register extends Component{
 
         this.onDismiss = this.onDismiss.bind(this);
         this.newlyAdded = this.newlyAdded.bind(this);
+        this.checkPending = this.checkPending.bind(this);
     }
 
     onDismiss() {
@@ -44,11 +46,144 @@ class Staff_Register extends Component{
         if(this.state.visible){
             return (
                 <div>
-                    <Alert color="primary" isOpen={this.state.visible} toggle={this.onDismiss} fade={false}>
+                    <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss} fade={false}>
                         Staff details successfully added and a Confirmation mail has been sent!
                     </Alert>
                 </div>
             );
+        }
+    }
+
+    checkPending(){
+        if(this.state.pending){
+
+            return (
+                <div className="col-md-8 py-5 border" >
+                    <Spinner style={{ width: '10rem', height: '10rem',paddingTop:'50px'}} type="grow" color="warning" />
+                </div>
+            )
+
+        }
+        else{
+            return(
+                <div className="col-md-8 py-5 border">
+                    <h4 className="pb-4">Please Fill Staff Member details</h4>
+                    <form id='staffForm'>
+                        <div className="form-row">
+                            <div className="input-group form-group col-md-6">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text"><MdPerson/></div>
+                            </div>
+                            <input 
+                                name="fullName" 
+                                placeholder="Full Name" 
+                                className="form-control" 
+                                type="text"
+                                onChange={this.onValueChange}
+                                value={this.state.fullName} />
+                            </div>
+                        <div className="input-group form-group col-md-6">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text"><MdEmail/></div>
+                            </div>
+                            <input 
+                                name="email" 
+                                placeholder="Email"
+                                className="form-control"
+                                type="email"
+                                onChange={this.onValueChange}
+                                value={this.state.email} />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="input-group form-group col-md-6">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><MdLock/></div>
+                                </div>
+                                <input 
+                                    name="password" 
+                                    placeholder="Password" 
+                                    className="form-control" 
+                                    required="required" 
+                                    type="password"
+                                    onChange={this.onValueChange}
+                                    value={this.state.password} />
+                            </div>
+                            <div className="input-group form-group col-md-6">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><MdCardTravel/></div>
+                                </div>   
+                                <select name="profession" className="form-control" onChange={this.onValueChange}>
+                                    <option selected>Choose Profession ...</option>
+                                    <option> Senior Lecturer</option>
+                                    <option> Lecturer</option>
+                                    <option> Instaructor</option>
+                                    <option> Lab Assistant</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="input-group form-group col-md-6">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><MdPhone/></div>
+                                </div>
+                                <input 
+                                    name="contactNum" 
+                                    placeholder="Contact No." 
+                                    className="form-control" 
+                                    required="required" 
+                                    type="tel" 
+                                    onChange={this.onValueChange}
+                                    value={this.state.contactNum}/>
+                            </div>
+                            <div className="input-group form-group col-md-6">
+                                <div className=" input-group-prepend">
+                                    <div className="input-group-text"><MdPlace/></div>
+                                </div>
+                            <select name="location" className=" form-control" onChange={this.onValueChange}>
+                                <option selected>Choose Location ...</option>
+                                <option> Colombo - Metro</option>
+                                <option> Malabe</option>
+                                <option> Kandy</option>
+                                <option> Jaffna</option>
+                                <option> Matara</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-12">
+                                    <textarea
+                                        name="response" 
+                                        cols="40" rows="5" 
+                                        className="form-control" 
+                                        placeholder="Responsibilities"
+                                        onChange={this.onValueChange}
+                                        value={this.state.response}></textarea>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group">
+                                <div className="form-group">
+                                    <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required />
+                                    <label className="form-check-label" >
+                                        <small>By clicking Submit, you agree to our Terms & Conditions, Visitor Agreement and Privacy Policy.</small>
+                                    </label>
+                                    </div>
+                                </div>
+                        
+                            </div>
+                        </div>
+                        
+                        <div className="form-row" style={{display:'flex',justifyContent:'center'}}>
+                            <button type='submit' className="btn btn-danger" onClick={this.onFormSubmit}>Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+                
+                
+            )
         }
     }
 
@@ -59,6 +194,7 @@ class Staff_Register extends Component{
     }
 
     onFormSubmit(e){
+        this.setState({pending:true})
         e.preventDefault();
 
         const fullName = this.state.fullName;
@@ -87,6 +223,7 @@ class Staff_Register extends Component{
                     // document.getElementById('staffForm').reset()
                     this.setState({
                         visible:true,
+                        pending:false,
                         fullName:'',
                         email:'',
                         password:'',
@@ -99,7 +236,6 @@ class Staff_Register extends Component{
                 err=>console.log(err)
             )
 
-        
     }
 
     render(){
@@ -127,121 +263,7 @@ class Staff_Register extends Component{
                                 </div>
 
                                 {/* form section */}
-                                <div className="col-md-8 py-5 border">
-                                    <h4 className="pb-4">Please Fill Staff Member details</h4>
-                                    <form id='staffForm'>
-                                        <div className="form-row">
-                                            <div className="input-group form-group col-md-6">
-                                            <div className="input-group-prepend">
-                                                <div className="input-group-text"><MdPerson/></div>
-                                            </div>
-                                            <input 
-                                                name="fullName" 
-                                                placeholder="Full Name" 
-                                                className="form-control" 
-                                                type="text"
-                                                onChange={this.onValueChange}
-                                                value={this.state.fullName} />
-                                            </div>
-                                        <div className="input-group form-group col-md-6">
-                                            <div className="input-group-prepend">
-                                                <div className="input-group-text"><MdEmail/></div>
-                                            </div>
-                                            <input 
-                                                name="email" 
-                                                placeholder="Email"
-                                                className="form-control"
-                                                type="email"
-                                                onChange={this.onValueChange}
-                                                value={this.state.email} />
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="input-group form-group col-md-6">
-                                                <div className="input-group-prepend">
-                                                    <div className="input-group-text"><MdLock/></div>
-                                                </div>
-                                                <input 
-                                                    name="password" 
-                                                    placeholder="Password" 
-                                                    className="form-control" 
-                                                    required="required" 
-                                                    type="password"
-                                                    onChange={this.onValueChange}
-                                                    value={this.state.password} />
-                                            </div>
-                                            <div className="input-group form-group col-md-6">
-                                                <div className="input-group-prepend">
-                                                    <div className="input-group-text"><MdCardTravel/></div>
-                                                </div>   
-                                                <select name="profession" className="form-control" onChange={this.onValueChange}>
-                                                    <option selected>Choose Profession ...</option>
-                                                    <option> Senior Lecturer</option>
-                                                    <option> Lecturer</option>
-                                                    <option> Instaructor</option>
-                                                    <option> Lab Assistant</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="input-group form-group col-md-6">
-                                                <div className="input-group-prepend">
-                                                    <div className="input-group-text"><MdPhone/></div>
-                                                </div>
-                                                <input 
-                                                    name="contactNum" 
-                                                    placeholder="Contact No." 
-                                                    className="form-control" 
-                                                    required="required" 
-                                                    type="tel" 
-                                                    onChange={this.onValueChange}
-                                                    value={this.state.contactNum}/>
-                                            </div>
-                                            <div className="input-group form-group col-md-6">
-                                                <div className=" input-group-prepend">
-                                                    <div className="input-group-text"><MdPlace/></div>
-                                                </div>
-                                            <select name="location" className=" form-control" onChange={this.onValueChange}>
-                                                <option selected>Choose Location ...</option>
-                                                <option> Colombo - Metro</option>
-                                                <option> Malabe</option>
-                                                <option> Kandy</option>
-                                                <option> Jaffna</option>
-                                                <option> Matara</option>
-                                            </select>
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="form-group col-md-12">
-                                                    <textarea
-                                                        name="response" 
-                                                        cols="40" rows="5" 
-                                                        className="form-control" 
-                                                        placeholder="Responsibilities"
-                                                        onChange={this.onValueChange}
-                                                        value={this.state.response}></textarea>
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="form-group">
-                                                <div className="form-group">
-                                                    <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required />
-                                                    <label className="form-check-label" >
-                                                        <small>By clicking Submit, you agree to our Terms & Conditions, Visitor Agreement and Privacy Policy.</small>
-                                                    </label>
-                                                    </div>
-                                                </div>
-                                        
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="form-row" style={{display:'flex',justifyContent:'center'}}>
-                                            <button type='submit' className="btn btn-danger" onClick={this.onFormSubmit}>Submit</button>
-                                        </div>
-
-                                    </form>
-                                </div>
+                                {this.checkPending()}
                             </div>
                         </div>
                     

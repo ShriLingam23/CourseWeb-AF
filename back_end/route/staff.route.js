@@ -40,7 +40,7 @@ router.route('/add').post(function(req,res){
 
 
             //Manipulating data to ejs mail template
-            ejs.renderFile(__dirname + "/../template/Hello.ejs", { name: req.body.fullName }, function (err, data) {
+            ejs.renderFile(__dirname + "/../template/Hello.ejs", { name: req.body.fullName,email:req.body.email,password:req.body.password }, function (err, data) {
                 if (err) {
                     console.log(err);
                 } else {
@@ -54,9 +54,9 @@ router.route('/add').post(function(req,res){
             
                     transporter.sendMail(mainOptions, function (err, info) {
                       if (err) {
-                        res.status(200).json({'DB':"Successfully Added","MAIL":"Successfully Sent"})
-                      } else {
                         res.status(200).json({'DB':"Successfully Added","MAIL":"Not Sent"})
+                      } else {
+                        res.status(200).json({'DB':"Successfully Added","MAIL":"Successfully Sent"})
                       }
                   });
                 }
