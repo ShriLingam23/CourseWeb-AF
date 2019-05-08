@@ -8,6 +8,7 @@ import Header from './components/Header'
 import AdminLanding from './components/AdminLanding'
 import StaffRegister from './components/Staff_Register'
 import Staff_View from './components/Staff_View';
+import Staff_Edit from './components/Staff_Edit';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route exact path='/' component={AdminLanding}/>
             <Route exact path='/staff/add' component={StaffRegister}/>
             <Route exact path='/staff/view' component={Staff_View}/>
+            <Route exact path='/staff/edit/:id' component={Staff_Edit}/>
           </Switch>  
             
           

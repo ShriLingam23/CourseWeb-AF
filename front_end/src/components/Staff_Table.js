@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import { Button } from 'reactstrap';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 class Staff_Table extends Component{
 
@@ -29,7 +30,7 @@ class Staff_Table extends Component{
                 <td scope="col">{this.state.staff.profession}</td>
                 <td scope="col">{this.state.staff.contactNum}</td>
                 <td scope="col">{this.state.staff.location}</td>
-                <td scope="col"><Button color="info">Update</Button></td>
+                <td scope="col"><Link to={'/staff/edit/'+this.state.staff._id}><Button color="info">Update</Button></Link></td>
                 <td scope="col"><Button color="danger" onClick={this.onDelete}>Delete</Button></td>
             </tr>
         )
