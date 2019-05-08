@@ -3,13 +3,69 @@ const router = express.Router();
 
 const Staff = require('../model/staff.model');
 
+
 //Create a new staff
 router.route('/add').post(function(req,res){
     let staff = new Staff(req.body);
     console.log(staff)
+
     staff.save()
         .then(result =>{
-            res.status(200).json({'staff':"Staff Successfully Added"})
+
+            //Dependiencies needed for Email service
+            const nodemailer = require('nodemailer');
+            const ejs = require("ejs");
+            const creds = require('../config/credential.js')
+
+            //Creating transport instance
+            var transport = {
+                host: 'smtp.gmail.com',
+                auth: {
+                user: creds.USER,
+                pass: creds.PASS
+                }
+            }
+
+            //Creating a Nodemailer Transport instance
+            var transporter = nodemailer.createTransport(transport)
+
+            //Verifying the Nodemailer Transport instance
+            transporter.verify((error, success) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Server is ready to take messages');
+                }
+            });
+
+
+            //Manipulating data to ejs mail template
+            ejs.renderFile(__dirname + "/../template/Hello.ejs", { name: req.body.fullName }, function (err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    var mainOptions = {
+                        from: '"FindMyTrip" findmytrip2017@gmail.com',
+                        to: req.body.email,
+                        subject: 'Account Activated',
+                        html: data
+                    };
+                    // console.log("html data ======================>", mainOptions.html);
+            
+                    transporter.sendMail(mainOptions, function (err, info) {
+                      if (err) {
+                        res.status(200).json({'DB':"Successfully Added","MAIL":"Successfully Sent"})
+                      } else {
+                        res.status(200).json({'DB':"Successfully Added","MAIL":"Not Sent"})
+                      }
+                  });
+                }
+              });
+            
+              
+
+            
+
         })
         .catch(err=>{
             res.status(400).send("unable to save to database");

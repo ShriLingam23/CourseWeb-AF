@@ -21,5 +21,5 @@ const staffRoute = require('./route/staff.route')
 app.use('/staff',staffRoute)
 
 app.listen(PORT,()=>{
-    console.log("Server listeing on port ",PORT)
+    console.log("Server listening on port ",PORT)
 })
