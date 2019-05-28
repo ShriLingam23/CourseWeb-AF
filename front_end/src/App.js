@@ -6,9 +6,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Header from './components/Header'
 import AdminLanding from './components/AdminLanding'
+
 import StaffRegister from './components/Staff/Staff_Register'
 import Staff_View from './components/Staff/Staff_View';
 import Staff_Edit from './components/Staff/Staff_Edit';
+
+import CourseRegister from './components/Course/Course_Register';
+import Course_View from './components/Course/Course_View';
+import Course_Edit from './components/Course/Course_Edit';
 
 function App() {
   return (
@@ -19,9 +24,15 @@ function App() {
           
           <Switch>
             <Route exact path='/' component={AdminLanding}/>
+
             <Route exact path='/staff/add' component={StaffRegister}/>
             <Route exact path='/staff/view' component={Staff_View}/>
             <Route exact path='/staff/edit/:id' component={Staff_Edit}/>
+
+            <Route exact path='/course/add' component={CourseRegister}/>
+            <Route exact path='/course/view' component={Course_View}/>
+            <Route exact path='/course/edit/:id' component={Course_Edit}/>
+
           </Switch>  
             
           

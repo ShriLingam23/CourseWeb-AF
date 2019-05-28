@@ -12,6 +12,10 @@ const Course = new Schema({
         type:String,
         required:true
     },
+    enrollment:{
+        type:String,
+        required:true
+    },
     Faculty:{
         type:String,
         required:true

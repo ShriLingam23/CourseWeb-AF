@@ -1,0 +1,286 @@
+import React,{Component} from 'react';
+import axios from 'axios';
+import {Link} from 'react-router-dom'
+import { Alert ,Spinner} from 'reactstrap';
+
+import logo from '../logo.svg'
+import { MdEmail } from "react-icons/md";
+import { MdPhone } from "react-icons/md";
+import { MdPerson } from "react-icons/md";
+import { MdLock } from "react-icons/md";
+import { MdPlace } from "react-icons/md";
+import { MdCardTravel } from "react-icons/md";
+
+import {IoIosKey} from "react-icons/io"
+import {IoMdStarHalf} from "react-icons/io"
+import {IoIosJournal} from "react-icons/io"
+import {IoMdBusiness} from "react-icons/io"
+import {IoIosKeypad} from "react-icons/io"
+import {IoIosGrid} from "react-icons/io"
+
+
+
+class Course_Register extends Component{
+
+    constructor(props) {
+        super(props);
+        // this.toggle = this.toggle.bind(this);
+        this.state = { 
+            visible: false,
+            pending: false,
+            fullName:'',
+            email:'',
+            password:'',
+            profession:'',
+            contactNum:'',
+            location:'',
+            response:''
+
+        };
+
+        this.onFormSubmit= this.onFormSubmit.bind(this);
+        this.onValueChange = this.onValueChange.bind(this);
+
+        this.onDismiss = this.onDismiss.bind(this);
+        this.newlyAdded = this.newlyAdded.bind(this);
+        this.checkPending = this.checkPending.bind(this);
+    }
+
+    onDismiss() {
+        this.setState({ visible: false });
+    }
+
+    newlyAdded(){
+        if(this.state.visible){
+            return (
+                <div>
+                    <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss} fade={false}>
+                        Course details successfully added and a Confirmation mail has been sent!
+                    </Alert>
+                </div>
+            );
+        }
+    }
+
+    checkPending(){
+        if(this.state.pending){
+
+            return (
+                <div className="col-md-8 py-5 border" >
+                    <Spinner style={{ width: '10rem', height: '10rem',paddingTop:'50px'}} type="grow" color="warning" />
+                </div>
+            )
+
+        }
+        else{
+            return(
+                <div className="col-md-8 py-5 border">
+                    <h4 className="pb-4">Please Fill Staff Member details</h4>
+                    <form id='staffForm'>
+                        <div className="form-row">
+                            <div className="input-group form-group col-md-6">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text"><IoMdStarHalf/></div>
+                            </div>
+                            <input 
+                                name="fullName" 
+                                placeholder="Full Name" 
+                                className="form-control" 
+                                type="text"
+                                onChange={this.onValueChange}
+                                value={this.state.fullName} />
+                            </div>
+                        <div className="input-group form-group col-md-6">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text"><IoIosJournal/></div>
+                            </div>
+                            <input 
+                                name="email" 
+                                placeholder="Email"
+                                className="form-control"
+                                type="email"
+                                onChange={this.onValueChange}
+                                value={this.state.email} />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="input-group form-group col-md-6">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><IoIosKey/></div>
+                                </div>
+                                <input 
+                                    name="password" 
+                                    placeholder="Password" 
+                                    className="form-control" 
+                                    required="required" 
+                                    type="password"
+                                    onChange={this.onValueChange}
+                                    value={this.state.password} />
+                            </div>
+                            <div className="input-group form-group col-md-6">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><IoMdBusiness/></div>
+                                </div>   
+                                <select name="profession" className="form-control" onChange={this.onValueChange}>
+                                    <option selected>Choose Profession ...</option>
+                                    <option> Senior Lecturer</option>
+                                    <option> Lecturer</option>
+                                    <option> Instaructor</option>
+                                    <option> Lab Assistant</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="input-group form-group col-md-6">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><IoIosKeypad/></div>
+                                </div>
+                                <select name="location" className=" form-control" onChange={this.onValueChange}>
+                                    <option selected>Choose Location ...</option>
+                                    <option> Colombo - Metro</option>
+                                    <option> Malabe</option>
+                                    <option> Kandy</option>
+                                    <option> Jaffna</option>
+                                    <option> Matara</option>
+                                </select>
+                            </div>
+                            <div className="input-group form-group col-md-6">
+                                <div className=" input-group-prepend">
+                                    <div className="input-group-text"><IoIosGrid/></div>
+                                </div>
+                                <select name="location" className=" form-control" onChange={this.onValueChange}>
+                                    <option selected>Choose Location ...</option>
+                                    <option> Colombo - Metro</option>
+                                    <option> Malabe</option>
+                                    <option> Kandy</option>
+                                    <option> Jaffna</option>
+                                    <option> Matara</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-12">
+                                    <textarea
+                                        name="response" 
+                                        cols="40" rows="5" 
+                                        className="form-control" 
+                                        placeholder="Responsibilities"
+                                        onChange={this.onValueChange}
+                                        value={this.state.response}></textarea>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group">
+                                <div className="form-group">
+                                    <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required />
+                                    <label className="form-check-label" >
+                                        <small>By clicking Submit, you agree to our Terms & Conditions, Visitor Agreement and Privacy Policy.</small>
+                                    </label>
+                                    </div>
+                                </div>
+                        
+                            </div>
+                        </div>
+                        
+                        <div className="form-row" style={{display:'flex',justifyContent:'center'}}>
+                            <button type='submit' className="btn btn-danger" onClick={this.onFormSubmit}>Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+                
+                
+            )
+        }
+    }
+
+    onValueChange(e){
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+
+    onFormSubmit(e){
+        this.setState({pending:true})
+        e.preventDefault();
+
+        const fullName = this.state.fullName;
+        const email = this.state.email;
+        const password = this.state.password;
+        const profession = this.state.profession;
+        const contactNum = this.state.contactNum;
+        const location = this.state.location;
+        const response = this.state.response;
+        console.log(fullName,email,password,profession,contactNum,location,response)
+
+        const staff={
+            fullName,
+            email,
+            password,
+            profession,
+            contactNum,
+            location,
+            response
+        }
+
+        axios.post('http://localhost:4000/staff/add',staff)
+            .then(
+                res=>{
+                    console.log(res.data)
+                    // document.getElementById('staffForm').reset()
+                    this.setState({
+                        visible:true,
+                        pending:false,
+                        fullName:'',
+                        email:'',
+                        password:'',
+                        profession:'',
+                        contactNum:'',
+                        location:'',
+                        response:''});
+
+                },
+                err=>console.log(err)
+            )
+
+    }
+
+    render(){
+        return(
+            <div className="container" style={{paddingTop:'20px'}}>
+                
+                {this.newlyAdded()}
+                {/* <!--Body--> */}
+
+                <main role="main" style={{marginTop:'10px'}}>
+
+                    <section className="jumbotron text-center" >
+                        <div className="container" style={{backgroundColor:'#f9fbe7',marginTop:'-30px',marginBottom:'-30px'}}>
+
+                            <div className='row' >
+                                <div className='col-md-4 bg-info text-white text-center'>
+                                    <div className="card-body" >
+                                        <img src={logo} />
+                                        <h2 className="py-3">Registration</h2>
+                                        <p>
+                                            Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.
+
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* form section */}
+                                {this.checkPending()}
+                            </div>
+                        </div>
+                    
+                    </section>
+                </main>
+
+            </div>
+        );
+    }
+}
+
+export default Course_Register;
