@@ -16,15 +16,15 @@ const Course = new Schema({
         type:String,
         required:true
     },
-    Faculty:{
+    faculty:{
         type:String,
         required:true
     },
-    Year:{
+    year:{
         type:Number,
         required:true
     },
-    Semester:{
+    semester:{
         type:Number,
         required:true,
 

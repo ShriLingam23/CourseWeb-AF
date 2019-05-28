@@ -4,12 +4,6 @@ import {Link} from 'react-router-dom'
 import { Alert ,Spinner} from 'reactstrap';
 
 import logo from '../logo.svg'
-import { MdEmail } from "react-icons/md";
-import { MdPhone } from "react-icons/md";
-import { MdPerson } from "react-icons/md";
-import { MdLock } from "react-icons/md";
-import { MdPlace } from "react-icons/md";
-import { MdCardTravel } from "react-icons/md";
 
 import {IoIosKey} from "react-icons/io"
 import {IoMdStarHalf} from "react-icons/io"
@@ -28,14 +22,12 @@ class Course_Register extends Component{
         this.state = { 
             visible: false,
             pending: false,
-            fullName:'',
-            email:'',
-            password:'',
-            profession:'',
-            contactNum:'',
-            location:'',
-            response:''
-
+            courseId:'',
+            courseName:'',
+            enrollment:'',
+            faculty:'',
+            year:'',
+            semester:''
         };
 
         this.onFormSubmit= this.onFormSubmit.bind(this);
@@ -55,7 +47,7 @@ class Course_Register extends Component{
             return (
                 <div>
                     <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss} fade={false}>
-                        Course details successfully added and a Confirmation mail has been sent!
+                        New Course details successfully added to the System!
                     </Alert>
                 </div>
             );
@@ -75,32 +67,34 @@ class Course_Register extends Component{
         else{
             return(
                 <div className="col-md-8 py-5 border">
-                    <h4 className="pb-4">Please Fill Staff Member details</h4>
-                    <form id='staffForm'>
+                    <h4 className="pb-4">Please Fill New Course details</h4>
+                    <form id='staffForm' onSubmit={this.onFormSubmit}>
                         <div className="form-row">
                             <div className="input-group form-group col-md-6">
                             <div className="input-group-prepend">
                                 <div className="input-group-text"><IoMdStarHalf/></div>
                             </div>
                             <input 
-                                name="fullName" 
-                                placeholder="Full Name" 
+                                name="courseId" 
+                                placeholder="Course ID" 
                                 className="form-control" 
+                                required="required"
                                 type="text"
                                 onChange={this.onValueChange}
-                                value={this.state.fullName} />
+                                value={this.state.courseId} />
                             </div>
                         <div className="input-group form-group col-md-6">
                             <div className="input-group-prepend">
                                 <div className="input-group-text"><IoIosJournal/></div>
                             </div>
                             <input 
-                                name="email" 
-                                placeholder="Email"
+                                name="courseName" 
+                                placeholder="Course Name"
                                 className="form-control"
-                                type="email"
+                                required="required"
+                                type="text"
                                 onChange={this.onValueChange}
-                                value={this.state.email} />
+                                value={this.state.courseName} />
                             </div>
                         </div>
                         <div className="form-row">
@@ -109,24 +103,24 @@ class Course_Register extends Component{
                                     <div className="input-group-text"><IoIosKey/></div>
                                 </div>
                                 <input 
-                                    name="password" 
-                                    placeholder="Password" 
+                                    name="enrollment" 
+                                    placeholder="Enrollment Key" 
                                     className="form-control" 
                                     required="required" 
                                     type="password"
                                     onChange={this.onValueChange}
-                                    value={this.state.password} />
+                                    value={this.state.enrollment} />
                             </div>
                             <div className="input-group form-group col-md-6">
                                 <div className="input-group-prepend">
                                     <div className="input-group-text"><IoMdBusiness/></div>
                                 </div>   
                                 <select name="profession" className="form-control" onChange={this.onValueChange}>
-                                    <option selected>Choose Profession ...</option>
-                                    <option> Senior Lecturer</option>
-                                    <option> Lecturer</option>
-                                    <option> Instaructor</option>
-                                    <option> Lab Assistant</option>
+                                    <option selected>Choose Faculty ...</option>
+                                    <option> Computing Faculty</option>
+                                    <option> Engineering Faculty</option>
+                                    <option> Business Faculty</option>
+                                    <option> Science Faculty</option>
                                 </select>
                             </div>
                         </div>
@@ -136,12 +130,11 @@ class Course_Register extends Component{
                                     <div className="input-group-text"><IoIosKeypad/></div>
                                 </div>
                                 <select name="location" className=" form-control" onChange={this.onValueChange}>
-                                    <option selected>Choose Location ...</option>
-                                    <option> Colombo - Metro</option>
-                                    <option> Malabe</option>
-                                    <option> Kandy</option>
-                                    <option> Jaffna</option>
-                                    <option> Matara</option>
+                                    <option selected>Choose Year ...</option>
+                                    <option> 1</option>
+                                    <option> 2</option>
+                                    <option> 3</option>
+                                    <option> 4</option>
                                 </select>
                             </div>
                             <div className="input-group form-group col-md-6">
@@ -149,26 +142,13 @@ class Course_Register extends Component{
                                     <div className="input-group-text"><IoIosGrid/></div>
                                 </div>
                                 <select name="location" className=" form-control" onChange={this.onValueChange}>
-                                    <option selected>Choose Location ...</option>
-                                    <option> Colombo - Metro</option>
-                                    <option> Malabe</option>
-                                    <option> Kandy</option>
-                                    <option> Jaffna</option>
-                                    <option> Matara</option>
+                                    <option selected>Choose Semester ...</option>
+                                    <option> 1</option>
+                                    <option> 2</option>
                                 </select>
                             </div>
                         </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-12">
-                                    <textarea
-                                        name="response" 
-                                        cols="40" rows="5" 
-                                        className="form-control" 
-                                        placeholder="Responsibilities"
-                                        onChange={this.onValueChange}
-                                        value={this.state.response}></textarea>
-                            </div>
-                        </div>
+                
                         <div className="form-row">
                             <div className="form-group">
                                 <div className="form-group">
@@ -184,7 +164,7 @@ class Course_Register extends Component{
                         </div>
                         
                         <div className="form-row" style={{display:'flex',justifyContent:'center'}}>
-                            <button type='submit' className="btn btn-danger" onClick={this.onFormSubmit}>Submit</button>
+                            <button type='submit' className="btn btn-danger">Submit</button>
                         </div>
 
                     </form>
@@ -205,26 +185,24 @@ class Course_Register extends Component{
         this.setState({pending:true})
         e.preventDefault();
 
-        const fullName = this.state.fullName;
-        const email = this.state.email;
-        const password = this.state.password;
-        const profession = this.state.profession;
-        const contactNum = this.state.contactNum;
-        const location = this.state.location;
-        const response = this.state.response;
-        console.log(fullName,email,password,profession,contactNum,location,response)
+        const courseId = this.state.courseId;
+        const courseName = this.state.courseName;
+        const enrollment = this.state.enrollment;
+        const faculty = this.state.faculty;
+        const year = this.state.year;
+        const semester = this.state.semester;
+        console.log(courseId,courseName,enrollment,faculty,year,semester)
 
-        const staff={
-            fullName,
-            email,
-            password,
-            profession,
-            contactNum,
-            location,
-            response
+        const course={
+            courseId,
+            courseName,
+            enrollment,
+            faculty,
+            year,
+            semester
         }
 
-        axios.post('http://localhost:4000/staff/add',staff)
+        axios.post('http://localhost:4000/course/add',course)
             .then(
                 res=>{
                     console.log(res.data)
@@ -232,13 +210,12 @@ class Course_Register extends Component{
                     this.setState({
                         visible:true,
                         pending:false,
-                        fullName:'',
-                        email:'',
-                        password:'',
-                        profession:'',
-                        contactNum:'',
-                        location:'',
-                        response:''});
+                        courseId:'',
+                        courseName:'',
+                        enrollment:'',
+                        faculty:'',
+                        year:'',
+                        semester:''});
 
                 },
                 err=>console.log(err)
@@ -262,7 +239,7 @@ class Course_Register extends Component{
                                 <div className='col-md-4 bg-info text-white text-center'>
                                     <div className="card-body" >
                                         <img src={logo} />
-                                        <h2 className="py-3">Registration</h2>
+                                        <h2 className="py-3">New Course</h2>
                                         <p>
                                             Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.
 

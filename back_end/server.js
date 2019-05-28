@@ -20,6 +20,9 @@ mongoose.connect(config.DB,{useNewUrlParser:true})
 const staffRoute = require('./route/staff.route')
 app.use('/staff',staffRoute)
 
+const courseRoute = require('./route/course.route')
+app.use('/course',courseRoute)
+
 app.listen(PORT,()=>{
     console.log("Server listening on port ",PORT)
 })

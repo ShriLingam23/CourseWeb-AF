@@ -11,7 +11,7 @@ class Course_View extends Component{
         super(props);
 
         this.state={
-            staffs:[]
+            courses:[]
         }
 
         this.fillTable=this.fillTable.bind(this);
@@ -19,30 +19,30 @@ class Course_View extends Component{
     }
 
     componentDidMount(){
-        axios.get('http://localhost:4000/staff/')
+        axios.get('http://localhost:4000/course/')
             .then(
-                staffs=>this.setState({staffs:staffs.data})
+                courses=>this.setState({courses:courses.data})
             )
 
             //console.log(this.state.staffs.length)
     }
 
     componentWillUpdate(){
-        axios.get('http://localhost:4000/staff/')
+        axios.get('http://localhost:4000/course/')
             .then(
-                staffs=>this.setState({staffs:staffs.data})
+                courses=>this.setState({courses:courses.data})
             )
     }
 
     fillTable(){
 
-        return this.state.staffs.map(staff=>{
-            return <CourseTable key={staff._id} staff={staff}/>
+        return this.state.courses.map(course=>{
+            return <CourseTable key={course._id} course={course}/>
         })
     }
 
     checkData(){
-        if(this.state.staffs.length>0){
+        if(this.state.courses.length>0){
 
             return(
                 <div className='container' style={{marginTop:'20px'}}>
@@ -51,11 +51,12 @@ class Course_View extends Component{
                     <table className="table table-hover table-responsive-md table-striped" style={{marginTop:'5px',marginBottom:'5px'}}>
                         <thead style={{backgroundColor:'#bdbdbd'}}>
                             <tr>
-                                <th scope="col">Staff Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Profession</th>
-                                <th scope="col">Contact Number</th>
-                                <th scope="col">Location</th>
+                                <th scope="col">Course ID</th>
+                                <th scope="col">Course Name</th>
+                                <th scope="col">Enrollment Key</th>
+                                <th scope="col">Faculty</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Semester</th>
                                 <th scope="col" colSpan='2'></th>
                             </tr>
                         </thead>
@@ -86,7 +87,7 @@ class Course_View extends Component{
                     </UncontrolledAlert>
                     <br></br>
                     <div style={{display:'flex',justifyContent:'center'}}>
-                        <Link to='/staff/add'><Button color="info">Add a New Staff</Button></Link>
+                        <Link to='/staff/add'><Button color="info">Add a New Course</Button></Link>
                     </div>
                 </div>
             )
