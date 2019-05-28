@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom'
 import { Alert ,Spinner} from 'reactstrap';
 
-import logo from '../components/logo.svg'
+import logo from '../logo.svg'
 import { MdEmail } from "react-icons/md";
 import { MdPhone } from "react-icons/md";
 import { MdPerson } from "react-icons/md";
@@ -19,7 +19,7 @@ class Staff_Register extends Component{
         // this.toggle = this.toggle.bind(this);
         this.state = { 
             visible: false,
-            pending: true,
+            pending: false,
             fullName:'',
             email:'',
             password:'',

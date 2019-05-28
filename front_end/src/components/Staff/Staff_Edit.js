@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom'
 import { Alert } from 'reactstrap';
 
-import logo from '../components/logo.svg'
+import logo from '../logo.svg'
 import { MdEmail } from "react-icons/md";
 import { MdPhone } from "react-icons/md";
 import { MdPerson } from "react-icons/md";

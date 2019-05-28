@@ -6,9 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Header from './components/Header'
 import AdminLanding from './components/AdminLanding'
-import StaffRegister from './components/Staff_Register'
-import Staff_View from './components/Staff_View';
-import Staff_Edit from './components/Staff_Edit';
+import StaffRegister from './components/Staff/Staff_Register'
+import Staff_View from './components/Staff/Staff_View';
+import Staff_Edit from './components/Staff/Staff_Edit';
 
 function App() {
   return (
