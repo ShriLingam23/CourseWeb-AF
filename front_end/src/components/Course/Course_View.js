@@ -87,7 +87,7 @@ class Course_View extends Component{
                     </UncontrolledAlert>
                     <br></br>
                     <div style={{display:'flex',justifyContent:'center'}}>
-                        <Link to='/staff/add'><Button color="info">Add a New Course</Button></Link>
+                        <Link to='/course/add'><Button color="info">Add a New Course</Button></Link>
                     </div>
                 </div>
             )

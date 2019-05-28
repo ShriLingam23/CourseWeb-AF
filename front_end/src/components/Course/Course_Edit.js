@@ -1,15 +1,16 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
-import { Alert } from 'reactstrap';
+import { Alert ,Spinner} from 'reactstrap';
 
 import logo from '../logo.svg'
-import { MdEmail } from "react-icons/md";
-import { MdPhone } from "react-icons/md";
-import { MdPerson } from "react-icons/md";
-import { MdLock } from "react-icons/md";
-import { MdPlace } from "react-icons/md";
-import { MdCardTravel } from "react-icons/md";
+
+import {IoIosKey} from "react-icons/io"
+import {IoMdStarHalf} from "react-icons/io"
+import {IoIosJournal} from "react-icons/io"
+import {IoMdBusiness} from "react-icons/io"
+import {IoIosKeypad} from "react-icons/io"
+import {IoIosGrid} from "react-icons/io"
 
 
 class Course_Edit extends Component{
@@ -19,13 +20,12 @@ class Course_Edit extends Component{
         
         this.state = { 
             visible: false,
-            fullName:'',
-            email:'',
-            password:'',
-            profession:'',
-            contactNum:'',
-            location:'',
-            response:''
+            courseId:'',
+            courseName:'',
+            enrollment:'',
+            faculty:'',
+            year:'',
+            semester:''
 
         };
 
@@ -37,17 +37,16 @@ class Course_Edit extends Component{
     }
 
     componentDidMount(){
-        axios.get('http://localhost:4000/staff/edit/'+this.props.match.params.id)
+        axios.get('http://localhost:4000/course/edit/'+this.props.match.params.id)
             .then(
-                staff =>{
+                course =>{
                     this.setState({
-                        fullName:staff.data.fullName,
-                        email:staff.data.email,
-                        password:staff.data.password,
-                        profession:staff.data.profession,
-                        contactNum:staff.data.contactNum,
-                        location:staff.data.location,
-                        response:staff.data.response
+                        courseId:course.data.courseId,
+                        courseName:course.data.courseName,
+                        enrollment:course.data.enrollment,
+                        faculty:course.data.faculty,
+                        year:course.data.year,
+                        semester:course.data.semester
                     })
                 }
             )
@@ -62,7 +61,7 @@ class Course_Edit extends Component{
             return (
                 <div>
                     <Alert color="primary" isOpen={this.state.visible} toggle={this.onDismiss} fade={false}>
-                        Staff Details Successfully Updated
+                        Course Details Successfully Updated
                     </Alert>
                 </div>
             );
@@ -78,48 +77,55 @@ class Course_Edit extends Component{
     onFormSubmit(e){
         e.preventDefault();
 
-        const fullName = this.state.fullName;
-        const email = this.state.email;
-        const password = this.state.password;
-        const profession = this.state.profession;
-        const contactNum = this.state.contactNum;
-        const location = this.state.location;
-        const response = this.state.response;
-        console.log(fullName,email,password,profession,contactNum,location,response)
+        const courseId = this.state.courseId;
+        const courseName = this.state.courseName;
+        const enrollment = this.state.enrollment;
+        const faculty = this.state.faculty;
+        const year = parseInt(this.state.year);
+        const semester = parseInt(this.state.semester);
+        console.log(courseId,courseName,enrollment,faculty,year,semester)
 
-        const staff={
-            fullName,
-            email,
-            password,
-            profession,
-            contactNum,
-            location,
-            response
+        const course={
+            courseId,
+            courseName,
+            enrollment,
+            faculty,
+            year,
+            semester
         }
 
-        axios.post('http://localhost:4000/staff/update/'+this.props.match.params.id,staff)
+        axios.post('http://localhost:4000/course/update/'+this.props.match.params.id,course)
             .then(
                 res=>{
                     console.log(res.data)
                     // document.getElementById('staffForm').reset()
                     this.setState({
                         visible:true,
-                        fullName:'',
-                        email:'',
-                        password:'',
-                        profession:'',
-                        contactNum:'',
-                        location:'',
-                        response:''});
+                        courseId:'',
+                        courseName:'',
+                        enrollment:'',
+                        faculty:'',
+                        year:'',
+                        semester:''});
 
                 },
                 err=>console.log(err)
             )
         
         setTimeout(()=>{
-            this.props.history.push('/staff/view')
+            this.props.history.push('/course/view')
         },1500);
         
+    }
+
+    showPass(){
+        var x = document.getElementById("enrollment");
+        x.type="text";
+    }
+
+    hidePass(){
+        var x = document.getElementById("enrollment");
+        x.type="password";
     }
 
     render(){
@@ -138,7 +144,7 @@ class Course_Edit extends Component{
                                 <div className='col-md-4 bg-info text-white text-center'>
                                     <div className="card-body" >
                                         <img src={logo} />
-                                        <h2 className="py-3">Registration</h2>
+                                        <h2 className="py-3">Course Update</h2>
                                         <p>
                                             Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.
 
@@ -148,100 +154,91 @@ class Course_Edit extends Component{
 
                                 {/* form section */}
                                 <div className="col-md-8 py-5 border">
-                                    <h4 className="pb-4">Please Fill Staff Member details</h4>
-                                    <form id='staffForm'>
+                                    <h4 className="pb-4">Please Fill details of Course to be Updated</h4>
+                                    <form id='staffForm' onSubmit={this.onFormSubmit}>
                                         <div className="form-row">
                                             <div className="input-group form-group col-md-6">
-                                            <div className="input-group-prepend">
-                                                <div className="input-group-text"><MdPerson/></div>
+                                                <div className="input-group-prepend">
+                                                    <div className="input-group-text"><IoMdStarHalf/></div>
+                                                </div>
+                                                <input 
+                                                    name="courseId" 
+                                                    placeholder="Course ID" 
+                                                    className="form-control" 
+                                                    required="required"
+                                                    type="text"
+                                                    onChange={this.onValueChange}
+                                                    value={this.state.courseId} />
                                             </div>
-                                            <input 
-                                                name="fullName" 
-                                                placeholder="Full Name" 
-                                                className="form-control" 
-                                                type="text"
-                                                onChange={this.onValueChange}
-                                                value={this.state.fullName} />
-                                            </div>
-                                        <div className="input-group form-group col-md-6">
-                                            <div className="input-group-prepend">
-                                                <div className="input-group-text"><MdEmail/></div>
-                                            </div>
-                                            <input 
-                                                name="email" 
-                                                placeholder="Email"
-                                                className="form-control"
-                                                type="email"
-                                                onChange={this.onValueChange}
-                                                value={this.state.email} />
+                                            <div className="input-group form-group col-md-6">
+                                                <div className="input-group-prepend">
+                                                    <div className="input-group-text"><IoIosJournal/></div>
+                                                </div>
+                                                <input 
+                                                    name="courseName" 
+                                                    placeholder="Course Name"
+                                                    className="form-control"
+                                                    required="required"
+                                                    type="text"
+                                                    onChange={this.onValueChange}
+                                                    value={this.state.courseName} />
                                             </div>
                                         </div>
                                         <div className="form-row">
                                             <div className="input-group form-group col-md-6">
                                                 <div className="input-group-prepend">
-                                                    <div className="input-group-text"><MdLock/></div>
+                                                    <div className="input-group-text"><IoIosKey/></div>
                                                 </div>
-                                                <input 
-                                                    name="password" 
-                                                    placeholder="Password" 
+                                                <input
+                                                    id="enrollment"  
+                                                    name="enrollment" 
+                                                    placeholder="Enrollment Key" 
                                                     className="form-control" 
                                                     required="required" 
                                                     type="password"
                                                     onChange={this.onValueChange}
-                                                    value={this.state.password} readOnly/>
+                                                    value={this.state.enrollment} 
+                                                    onMouseOver={this.showPass.bind(this)}
+                                                    onMouseOut={this.hidePass.bind(this)}/>
                                             </div>
                                             <div className="input-group form-group col-md-6">
                                                 <div className="input-group-prepend">
-                                                    <div className="input-group-text"><MdCardTravel/></div>
+                                                    <div className="input-group-text"><IoMdBusiness/></div>
                                                 </div>   
-                                                <select name="profession" className="form-control" onChange={this.onValueChange} value={this.state.profession}>
-                                                    <option>Choose Profession ...</option>
-                                                    <option> Senior Lecturer</option>
-                                                    <option> Lecturer</option>
-                                                    <option> Instaructor</option>
-                                                    <option> Lab Assistant</option>
+                                                <select name="faculty" className="form-control" onChange={this.onValueChange} value={this.state.faculty}>
+                                                    <option>Choose Faculty ...</option>
+                                                    <option> Computing Faculty</option>
+                                                    <option> Engineering Faculty</option>
+                                                    <option> Business Faculty</option>
+                                                    <option> Science Faculty</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div className="form-row">
                                             <div className="input-group form-group col-md-6">
                                                 <div className="input-group-prepend">
-                                                    <div className="input-group-text"><MdPhone/></div>
+                                                    <div className="input-group-text"><IoIosKeypad/></div>
                                                 </div>
-                                                <input 
-                                                    name="contactNum" 
-                                                    placeholder="Contact No." 
-                                                    className="form-control" 
-                                                    required="required" 
-                                                    type="tel" 
-                                                    onChange={this.onValueChange}
-                                                    value={this.state.contactNum}/>
+                                                <select name="year" className=" form-control" onChange={this.onValueChange} value={this.state.year}>
+                                                    <option>Choose Year ...</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                </select>
                                             </div>
                                             <div className="input-group form-group col-md-6">
                                                 <div className=" input-group-prepend">
-                                                    <div className="input-group-text"><MdPlace/></div>
+                                                    <div className="input-group-text"><IoIosGrid/></div>
                                                 </div>
-                                            <select name="location" className=" form-control" onChange={this.onValueChange} value={this.state.location}>
-                                                <option selected>Choose Location ...</option>
-                                                <option> Colombo - Metro</option>
-                                                <option> Malabe</option>
-                                                <option> Kandy</option>
-                                                <option> Jaffna</option>
-                                                <option> Matara</option>
-                                            </select>
+                                                <select name="semester" className=" form-control" onChange={this.onValueChange} value={this.state.semester}>
+                                                    <option>Choose Semester ...</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                </select>
                                             </div>
                                         </div>
-                                        <div className="form-row">
-                                            <div className="form-group col-md-12">
-                                                    <textarea
-                                                        name="response" 
-                                                        cols="40" rows="5" 
-                                                        className="form-control" 
-                                                        placeholder="Responsibilities"
-                                                        onChange={this.onValueChange}
-                                                        value={this.state.response}></textarea>
-                                            </div>
-                                        </div>
+                                
                                         <div className="form-row">
                                             <div className="form-group">
                                                 <div className="form-group">
@@ -257,7 +254,7 @@ class Course_Edit extends Component{
                                         </div>
                                         
                                         <div className="form-row" style={{display:'flex',justifyContent:'center'}}>
-                                            <button type='submit' className="btn btn-danger" onClick={this.onFormSubmit}>Save changes</button>
+                                            <button type='submit' className="btn btn-danger">Submit</button>
                                         </div>
 
                                     </form>

@@ -115,7 +115,7 @@ class Course_Register extends Component{
                                 <div className="input-group-prepend">
                                     <div className="input-group-text"><IoMdBusiness/></div>
                                 </div>   
-                                <select name="profession" className="form-control" onChange={this.onValueChange}>
+                                <select name="faculty" className="form-control" onChange={this.onValueChange}>
                                     <option selected>Choose Faculty ...</option>
                                     <option> Computing Faculty</option>
                                     <option> Engineering Faculty</option>
@@ -129,22 +129,22 @@ class Course_Register extends Component{
                                 <div className="input-group-prepend">
                                     <div className="input-group-text"><IoIosKeypad/></div>
                                 </div>
-                                <select name="location" className=" form-control" onChange={this.onValueChange}>
+                                <select name="year" className=" form-control" onChange={this.onValueChange}>
                                     <option selected>Choose Year ...</option>
-                                    <option> 1</option>
-                                    <option> 2</option>
-                                    <option> 3</option>
-                                    <option> 4</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
                                 </select>
                             </div>
                             <div className="input-group form-group col-md-6">
                                 <div className=" input-group-prepend">
                                     <div className="input-group-text"><IoIosGrid/></div>
                                 </div>
-                                <select name="location" className=" form-control" onChange={this.onValueChange}>
+                                <select name="semester" className=" form-control" onChange={this.onValueChange}>
                                     <option selected>Choose Semester ...</option>
-                                    <option> 1</option>
-                                    <option> 2</option>
+                                    <option>1</option>
+                                    <option>2</option>
                                 </select>
                             </div>
                         </div>
@@ -182,15 +182,15 @@ class Course_Register extends Component{
     }
 
     onFormSubmit(e){
-        this.setState({pending:true})
+        //this.setState({pending:true})
         e.preventDefault();
 
         const courseId = this.state.courseId;
         const courseName = this.state.courseName;
         const enrollment = this.state.enrollment;
         const faculty = this.state.faculty;
-        const year = this.state.year;
-        const semester = this.state.semester;
+        const year = parseInt(this.state.year);
+        const semester = parseInt(this.state.semester);
         console.log(courseId,courseName,enrollment,faculty,year,semester)
 
         const course={
