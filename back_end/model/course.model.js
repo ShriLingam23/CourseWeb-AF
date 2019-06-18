@@ -27,8 +27,11 @@ const Course = new Schema({
     semester:{
         type:Number,
         required:true,
-
-    }
+    },
+    staffs:[{
+        type:Schema.Types.ObjectId,
+        ref:"Staff"
+    }]
 });
 
 module.exports = mongoose.model("Course",Course);
