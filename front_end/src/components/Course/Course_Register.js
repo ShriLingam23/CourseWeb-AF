@@ -259,7 +259,8 @@ class Course_Register extends Component{
         const faculty = this.state.faculty;
         const year = parseInt(this.state.year);
         const semester = parseInt(this.state.semester);
-        console.log(courseId,courseName,enrollment,faculty,year,semester)
+        const staffs = this.state.checkedStaffs
+        console.log(courseId,courseName,enrollment,faculty,year,semester,staffs)
 
         const course={
             courseId,
@@ -267,7 +268,8 @@ class Course_Register extends Component{
             enrollment,
             faculty,
             year,
-            semester
+            semester,
+            staffs
         }
 
         axios.post('http://localhost:4000/course/add',course)

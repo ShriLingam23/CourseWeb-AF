@@ -26,7 +26,7 @@ class Course_Staff_Row extends Component{
     }
 
     checkStaff(){
-        var check = document.getElementById('success');
+        var check = document.getElementById(this.state.staff._id);
         console.log(check.checked)
 
         this.props.passValue(this.state.staff._id,check.checked)
@@ -42,7 +42,7 @@ class Course_Staff_Row extends Component{
                 <td scope="col">{this.state.staff.location}</td>
 
                 <label style={{marginTop:'5px'}} className="btn btn-success">Assign 
-                    <input type="checkbox" id="success" className="badgebox" onClick={this.checkStaff}/>
+                    <input type="checkbox" id={this.state.staff._id} className="badgebox" onClick={this.checkStaff}/>
                     <span className="badge">{icons.ok}</span>
                 </label>
 
