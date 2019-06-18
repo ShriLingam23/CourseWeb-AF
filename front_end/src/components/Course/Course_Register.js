@@ -11,6 +11,7 @@ import {IoIosJournal} from "react-icons/io"
 import {IoMdBusiness} from "react-icons/io"
 import {IoIosKeypad} from "react-icons/io"
 import {IoIosGrid} from "react-icons/io"
+import {IoIosPeople} from "react-icons/io"
 
 
 
@@ -146,6 +147,18 @@ class Course_Register extends Component{
                                     <option>1</option>
                                     <option>2</option>
                                 </select>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="input-group form-group col-md-12">
+                                {/* <div className="input-group-prepend">
+                                    <div className="input-group-text"><IoIosPeople/></div>
+                                </div> */}
+                                <div className="form-control bg-dark text-info text-light" style={{height:'150px',marginTop:'20px'}}>
+                                    
+                                    <h3><IoIosPeople size="50px" style={{marginRight:'10px'}}/>Incharge Staffs</h3>
+                                </div>
                             </div>
                         </div>
                 
