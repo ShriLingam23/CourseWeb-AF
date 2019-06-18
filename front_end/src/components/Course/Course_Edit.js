@@ -11,7 +11,9 @@ import {IoIosJournal} from "react-icons/io"
 import {IoMdBusiness} from "react-icons/io"
 import {IoIosKeypad} from "react-icons/io"
 import {IoIosGrid} from "react-icons/io"
+import {IoIosPeople} from "react-icons/io"
 
+import Course_Staff_Update_Row from './Course_Staff_Update_Row'
 
 class Course_Edit extends Component{
 
@@ -25,7 +27,9 @@ class Course_Edit extends Component{
             enrollment:'',
             faculty:'',
             year:'',
-            semester:''
+            semester:'',
+            staffs:[],
+            checkedStaffs:[]
 
         };
 
@@ -34,9 +38,12 @@ class Course_Edit extends Component{
 
         this.onDismiss = this.onDismiss.bind(this);
         this.newlyUpdated = this.newlyUpdated.bind(this);
+
+        this.fillStaff= this.fillStaff.bind(this);
     }
 
     componentDidMount(){
+
         axios.get('http://localhost:4000/course/edit/'+this.props.match.params.id)
             .then(
                 course =>{
@@ -46,10 +53,23 @@ class Course_Edit extends Component{
                         enrollment:course.data.enrollment,
                         faculty:course.data.faculty,
                         year:course.data.year,
-                        semester:course.data.semester
+                        semester:course.data.semester,
+                        checkedStaffs:course.data.staffs
                     })
+
+                    console.log(course)
                 }
+
+                
             )
+
+            
+
+        axios.get('http://localhost:4000/staff/')
+            .then(
+                staffs=>this.setState({staffs:staffs.data})
+            )
+
     }
 
     onDismiss() {
@@ -68,6 +88,41 @@ class Course_Edit extends Component{
         }
     }
 
+    checkStaff(id,bool){
+
+        let staffs = this.state.checkedStaffs;
+        console.log(id,bool)
+
+        if(bool)
+            staffs.push(id)
+            
+        else
+            staffs.splice(id,1);
+
+        this.setState({
+            checkedStaffs:staffs
+        },()=>{
+            console.log(this.state.checkedStaffs)
+        })           
+
+    }
+
+    fillStaff(){
+        return this.state.staffs.map((staff)=>{
+
+            if(this.state.checkedStaffs.includes(staff._id)){
+                return(
+                    <Course_Staff_Update_Row key={staff._id} staff={staff} checked={true} passValue={this.checkStaff.bind(this)}/>
+                )
+            }
+            else{
+                return(
+                    <Course_Staff_Update_Row key={staff._id} staff={staff} checked={false} passValue={this.checkStaff.bind(this)}/>
+                )
+            }
+        })
+    }
+
     onValueChange(e){
         this.setState({
             [e.target.name]:e.target.value
@@ -83,7 +138,8 @@ class Course_Edit extends Component{
         const faculty = this.state.faculty;
         const year = parseInt(this.state.year);
         const semester = parseInt(this.state.semester);
-        console.log(courseId,courseName,enrollment,faculty,year,semester)
+        const staffs = this.state.checkedStaffs
+        console.log(courseId,courseName,enrollment,faculty,year,semester,staffs)
 
         const course={
             courseId,
@@ -91,7 +147,8 @@ class Course_Edit extends Component{
             enrollment,
             faculty,
             year,
-            semester
+            semester,
+            staffs
         }
 
         axios.post('http://localhost:4000/course/update/'+this.props.match.params.id,course)
@@ -236,6 +293,33 @@ class Course_Edit extends Component{
                                                     <option>1</option>
                                                     <option>2</option>
                                                 </select>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-row">
+                                            <div className="input-group form-group col-md-12">
+                                                <div className="form-control bg-dark text-info text-light" style={{height:'60px',marginTop:'20px'}}>  
+                                                    <h4><IoIosPeople size="50px" style={{marginRight:'10px'}}/>Incharge Staffs</h4>
+                                                    
+                                                    
+                                    
+                                                </div>
+                                                <table className="table table-hover table-responsive-md " style={{marginTop:'5px',marginBottom:'5px'}}>
+                                                        <thead >
+                                                            <tr>
+                                                                <th scope="col">Staff Name</th>
+                                                                {/* <th scope="col">Email</th> */}
+                                                                <th scope="col">Profession</th>
+                                                                {/* <th scope="col">Contact Number</th> */}
+                                                                <th scope="col">Location</th>
+                                                                <th scope="col" colSpan='2'></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {this.fillStaff()}
+                                                        </tbody>
+                                                    </table>
+                                                
                                             </div>
                                         </div>
                                 

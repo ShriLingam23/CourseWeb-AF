@@ -59,6 +59,7 @@ router.route('/update/:id').post(function (req, res) {
             course.faculty=req.body.faculty;
             course.year=req.body.year;
             course.semester=req.body.semester;
+            course.staffs=req.body.staffs;
             
             course.save()
                 .then(result=>{

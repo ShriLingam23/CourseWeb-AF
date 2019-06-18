@@ -5,13 +5,14 @@ import icons from '../../../node_modules/glyphicons'
 
 import '../../assets/css/CheckBox.css'
 
-class Course_Staff_Row extends Component{
+class Course_Staff_Update_Row extends Component{
 
     constructor(props){
         super(props);
 
         this.state={
-            staff:props.staff
+            staff:props.staff,
+            checked:props.checked
         }
 
         this.checkStaff= this.checkStaff.bind(this);
@@ -21,7 +22,13 @@ class Course_Staff_Row extends Component{
         var check = document.getElementById(this.state.staff._id);
         console.log(check.checked)
 
-        this.props.passValue(this.state.staff._id,check.checked)
+        this.setState({
+            checked:check.checked
+        },()=>{
+            this.props.passValue(this.state.staff._id,this.state.checked)
+        })
+
+        
     }
 
     render(){
@@ -33,8 +40,8 @@ class Course_Staff_Row extends Component{
                 {/* <td scope="col">{this.state.staff.contactNum}</td> */}
                 <td scope="col">{this.state.staff.location}</td>
 
-                <label style={{marginTop:'5px'}} className="btn btn-warning">Assign 
-                    <input type="checkbox" id={this.state.staff._id} className="badgebox" onClick={this.checkStaff}/>
+                <label style={{marginTop:'5px'}} className="btn btn-warning text-dark">Assign 
+                    <input type="checkbox" id={this.state.staff._id} className="badgebox" onClick={this.checkStaff} checked={this.state.checked}/>
                     <span className="badge">{icons.ok}</span>
                 </label>
 
@@ -46,4 +53,4 @@ class Course_Staff_Row extends Component{
 
 }
 
-export default Course_Staff_Row;
+export default Course_Staff_Update_Row;

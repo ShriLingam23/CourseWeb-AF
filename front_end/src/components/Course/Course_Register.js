@@ -285,7 +285,8 @@ class Course_Register extends Component{
                         enrollment:'',
                         faculty:'',
                         year:'',
-                        semester:''});
+                        semester:'',
+                        checkedStaffs:[]});
 
                 },
                 err=>console.log(err)
