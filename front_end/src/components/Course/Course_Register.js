@@ -13,7 +13,7 @@ import {IoIosKeypad} from "react-icons/io"
 import {IoIosGrid} from "react-icons/io"
 import {IoIosPeople} from "react-icons/io"
 
-
+import Course_Staff_Row from './Course_Staff_Row'
 
 class Course_Register extends Component{
 
@@ -28,7 +28,9 @@ class Course_Register extends Component{
             enrollment:'',
             faculty:'',
             year:'',
-            semester:''
+            semester:'',
+            staffs:[],
+            checkedStaffs:[]
         };
 
         this.onFormSubmit= this.onFormSubmit.bind(this);
@@ -37,6 +39,17 @@ class Course_Register extends Component{
         this.onDismiss = this.onDismiss.bind(this);
         this.newlyAdded = this.newlyAdded.bind(this);
         this.checkPending = this.checkPending.bind(this);
+
+        this.fillStaff= this.fillStaff.bind(this);
+    }
+
+    componentDidMount(){
+        axios.get('http://localhost:4000/staff/')
+            .then(
+                staffs=>this.setState({staffs:staffs.data})
+            )
+
+            console.log(this.state.staffs.length)
     }
 
     onDismiss() {
@@ -53,6 +66,33 @@ class Course_Register extends Component{
                 </div>
             );
         }
+    }
+
+    checkStaff(id,bool){
+
+        let staffs = this.state.checkedStaffs;
+
+        if(bool)
+            staffs.push(id)
+            
+        else
+            staffs.splice(id,1);
+
+        this.setState({
+            checkedStaffs:staffs
+        },()=>{
+            console.log(this.state.checkedStaffs)
+        })
+            
+
+    }
+
+    fillStaff(){
+        return this.state.staffs.map((staff)=>{
+            return(
+                <Course_Staff_Row key={staff._id} staff={staff} passValue={this.checkStaff.bind(this)}/>
+            )
+        })
     }
 
     checkPending(){
@@ -152,13 +192,28 @@ class Course_Register extends Component{
 
                         <div className="form-row">
                             <div className="input-group form-group col-md-12">
-                                {/* <div className="input-group-prepend">
-                                    <div className="input-group-text"><IoIosPeople/></div>
-                                </div> */}
-                                <div className="form-control bg-dark text-info text-light" style={{height:'150px',marginTop:'20px'}}>
+                                <div className="form-control bg-dark text-info text-light" style={{height:'60px',marginTop:'20px'}}>  
+                                    <h4><IoIosPeople size="50px" style={{marginRight:'10px'}}/>Incharge Staffs</h4>
                                     
-                                    <h3><IoIosPeople size="50px" style={{marginRight:'10px'}}/>Incharge Staffs</h3>
+                                    
+                    
                                 </div>
+                                <table className="table table-hover table-responsive-md " style={{marginTop:'5px',marginBottom:'5px'}}>
+                                        <thead >
+                                            <tr>
+                                                <th scope="col">Staff Name</th>
+                                                {/* <th scope="col">Email</th> */}
+                                                <th scope="col">Profession</th>
+                                                {/* <th scope="col">Contact Number</th> */}
+                                                <th scope="col">Location</th>
+                                                <th scope="col" colSpan='2'></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {this.fillStaff()}
+                                        </tbody>
+                                    </table>
+                                
                             </div>
                         </div>
                 
