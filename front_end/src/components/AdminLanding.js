@@ -90,7 +90,7 @@ class AdminLanding extends Component{
                         </div>
                     </div>
 
-                    <div className="container" style={{paddingTop:'50px',paddingBottom:'50px'}}>
+                    <div className="container bg-light" style={{marginTop:'50px',marginBottom:'50px',paddingTop:'50px',paddingBottom:'50px'}}>
                         <Notice_View/>
                     </div>
 

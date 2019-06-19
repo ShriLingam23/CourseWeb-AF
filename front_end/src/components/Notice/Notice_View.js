@@ -10,6 +10,10 @@ import { FilePond, registerPlugin } from 'react-filepond';
 //import and register the image preview plugin.
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+
+import Swal from 'sweetalert2'
+
+import Notice_Row from './Notice_Row';
 registerPlugin(FilePondPluginImagePreview);
 
 class Notice_View extends Component{
@@ -40,21 +44,56 @@ class Notice_View extends Component{
           )
       }
 
-    toggle() {
-        this.setState(prevState => ({
-          modal: !prevState.modal
-        }));
+    toggle(e) {
+        if(e.target.name=='save'){
+          if(this.state.id!=''){
+            this.setState(prevState => ({
+              modal: !prevState.modal
+            }));
+    
+            axios.get('http://localhost:4000/file/uploadfile')
+              .then(
+                (res)=>{
+                  this.setState({
+                    images:res.data
+                  },()=>{
+                    console.log(this.state.images)
+                  })
+                }
+              )
 
-        axios.get('http://localhost:4000/file/uploadfile')
-          .then(
-            (res)=>{
-              this.setState({
-                images:res.data
-              },()=>{
-                console.log(this.state.images)
-              })
-            }
-          )
+              Swal.fire(
+                'Good job!',
+                'Notice Successfully published!',
+                'success'
+              )
+          }
+          else{
+            Swal.fire({
+              title: 'Error!',
+              text: 'Please select the Notice to be Uploaded',
+              type: 'error',
+              confirmButtonText: 'Close'
+            })
+          }
+        }
+        else{
+          this.setState(prevState => ({
+            modal: !prevState.modal
+          }));
+  
+          axios.get('http://localhost:4000/file/uploadfile')
+            .then(
+              (res)=>{
+                this.setState({
+                  images:res.data
+                },()=>{
+                  console.log(this.state.images)
+                })
+              }
+            )
+
+        }
     }
 
     handlePondFile(error, file) {
@@ -81,16 +120,30 @@ class Notice_View extends Component{
             )
     }
 
+    resetNotice(bool){
+      console.log(bool)
+      axios.get('http://localhost:4000/file/uploadfile')
+          .then(
+            (res)=>{
+              this.setState({
+                images:res.data
+              },()=>{
+                console.log(this.state.images)
+              })
+            }
+          )
+    }
+
     fillNotices(){
-        // return this.state.images.map((image)=>{
-        //     return
-        // })
+        return this.state.images.map((image)=>{
+            return <Notice_Row key={image._id} image={image} deleted={this.resetNotice.bind(this)}/>
+        })
     }
     
     render() {
         return (
             <div style={{display:'flex',justifyContent:'center'}}>
-                <Button color="danger" onClick={this.toggle}><IoIosNotificationsOutline size="30px"/> Add a Notification</Button>
+                
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Add a New Notification</ModalHeader>
@@ -102,14 +155,18 @@ class Notice_View extends Component{
                         server="http://localhost:4000/file/uploadfile"/>
                     </ModalBody>
                     <ModalFooter>
-                    <Button color="primary" onClick={this.toggle}>Save changes</Button>{' '}
-                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    <Button color="primary" onClick={this.toggle} name='save'>Save changes</Button>{' '}
+                    <Button color="secondary" onClick={this.toggle} name='cancle'>Cancel</Button>
                     </ModalFooter>
                 </Modal>
 
-                <div>
+                <table >
+                    <tr >
+                      <td style={{paddingLeft:'200px'}}><Button color="warning" onClick={this.toggle}><IoIosNotificationsOutline size="30px"/> Add a Notification</Button></td>
+                    </tr>
                     {this.fillNotices()}
-                </div>
+                </table>
+
             </div>
         );
     }

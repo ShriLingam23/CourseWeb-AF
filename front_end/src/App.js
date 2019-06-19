@@ -20,7 +20,6 @@ function App() {
     <BrowserRouter>
       <div className="parallax">
         <Header/>
-        
           
           <Switch>
             <Route exact path='/' component={AdminLanding}/>
