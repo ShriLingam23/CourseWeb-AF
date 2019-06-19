@@ -6,8 +6,8 @@ import { Collapse, Button } from 'reactstrap';
 import logo from '../components/logo.svg'
 import '../assets/css/Landing.css'
 
-
 import Slide from './Slides'
+import Notice_View from './Notice/Notice_View'
 
 class AdminLanding extends Component{
     
@@ -88,6 +88,10 @@ class AdminLanding extends Component{
                                 
                             </div>
                         </div>
+                    </div>
+
+                    <div className="container" style={{paddingTop:'50px',paddingBottom:'50px'}}>
+                        <Notice_View/>
                     </div>
 
                     </main>

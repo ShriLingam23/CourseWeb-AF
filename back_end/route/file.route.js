@@ -33,15 +33,14 @@ router.post("/uploadfile", upload.single("file"), function(req, res, next){
 router.route('/uploadfile').get(function(req,res){
     
     File.find().exec((err, result) => {
-    console.log(imgArray);
    
-    if (err) 
-        return console.log(err)
+        if (err) 
+            return console.log(err)
 
-    console.log(result)
+        console.log(result)
 
-    res.contentType('json');
-    res.send(result)
+        res.contentType('json');
+        res.send(result)
    
     })
 })
