@@ -1,7 +1,5 @@
 import React,{Component} from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
-import { Alert ,Spinner} from 'reactstrap';
 
 import logo from '../logo.svg'
 
@@ -12,6 +10,7 @@ import {MdPhone} from "react-icons/md"
 import {IoIosMail} from "react-icons/io"
 import {IoIosBook} from "react-icons/io"
 
+import Student_Course_Row from './Student_Course_Row'
 
 class Student_Profile extends Component{
 
@@ -70,19 +69,11 @@ class Student_Profile extends Component{
     }
 
     fillCourse(){
-        // return this.state.staffs.map((staff)=>{
-
-        //     if(this.state.checkedStaffs.includes(staff._id)){
-        //         return(
-        //             <Course_Staff_Update_Row key={staff._id} staff={staff} checked={true} passValue={this.checkStaff.bind(this)}/>
-        //         )
-        //     }
-        //     else{
-        //         return(
-        //             <Course_Staff_Update_Row key={staff._id} staff={staff} checked={false} passValue={this.checkStaff.bind(this)}/>
-        //         )
-        //     }
-        // })
+        return this.state.courses.map((course)=>{
+            return(
+                <Student_Course_Row key={course._id} course={course}/>
+            )
+        })
     }
 
     showPass(){
@@ -191,12 +182,11 @@ class Student_Profile extends Component{
                                                 <table className="table table-hover table-responsive-md " style={{marginTop:'5px',marginBottom:'5px'}}>
                                                         <thead >
                                                             <tr>
-                                                                <th scope="col">Staff Name</th>
-                                                                {/* <th scope="col">Email</th> */}
-                                                                <th scope="col">Profession</th>
-                                                                {/* <th scope="col">Contact Number</th> */}
-                                                                <th scope="col">Location</th>
-                                                                <th scope="col" colSpan='2'></th>
+                                                                <th scope="col">Course ID</th>
+                                                                <th scope="col">Course Name</th>
+                                                                <th scope="col">Faculty</th>
+                                                                <th scope="col">Year</th>
+                                                                <th scope="col">Semester</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
