@@ -26,6 +26,9 @@ app.use('/course',courseRoute)
 const fileRoute = require('./route/file.route')
 app.use('/file',fileRoute)
 
+const studentRoute = require('./route/student.route')
+app.use('/student',studentRoute)
+
 app.listen(PORT,()=>{
     console.log("Server listening on port ",PORT)
 })
