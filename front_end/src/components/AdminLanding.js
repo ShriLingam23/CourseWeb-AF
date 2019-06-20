@@ -70,7 +70,7 @@ class AdminLanding extends Component{
                                 </div>
                                 <div className="col-md-4">
                                     <div className="card mb-4 shadow-sm">
-                                        <h5 className="jumbotron-heading text-info" style={{marginTop:'10px',textAlign:'center'}}>Album example</h5>
+                                        <h5 className="jumbotron-heading text-info" style={{marginTop:'10px',textAlign:'center'}}>Students</h5>
                                         <img src={logo} className="card-img-top rounded-circle" alt="..." />
                                         <div className="card-body">
                                             <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>

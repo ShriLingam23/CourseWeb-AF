@@ -62,7 +62,7 @@ class Notice_Row extends Component{
                     <tr>
                         <Button 
                             color="success" 
-                            style={{height:'150px',width:'100px',marginTop:'30px'}} >
+                            style={{height:'150px',width:'100px'}} >
                                 <IoIosEye size='40px'/> 
                                 <ModalImage
                                     large={`data:image/png;base64,${this.state.path}`}
@@ -72,7 +72,7 @@ class Notice_Row extends Component{
                     <tr>
                         <Button 
                             color="danger" 
-                            style={{height:'150px',width:'100px',marginTop:'10px'}} 
+                            style={{height:'150px',width:'100px',marginTop:'20px'}} 
                             onClick={this.onDelete}>
                                 <IoIosCloseCircleOutline size='40px'/>Delete</Button>
                     </tr>
