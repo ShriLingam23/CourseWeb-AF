@@ -36,10 +36,11 @@ router.route('/').get(function(req,res){
 //Get Course details for Edit
 router.route('/edit/:id').get(function (req, res) {
 
-    Student.find({_id:req.params.id}).populate('courses').exec()
+    Student.findOne({_id:req.params.id}).populate('courses').exec()
         .then(
             (student)=>{
                 res.status(200).json(student);
+                console.log(student)
             }
         )
         .catch(

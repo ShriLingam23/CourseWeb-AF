@@ -21,6 +21,12 @@ const Student = new Schema({
         type:String,
         required:true
     },
+    contactNum:{
+        type:String,
+        required:true,
+        minlength: 10,
+        maxlength: 10
+    },
     courses:[{
         type:Schema.Types.ObjectId,
         ref:"Course"

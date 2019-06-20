@@ -15,6 +15,9 @@ import CourseRegister from './components/Course/Course_Register';
 import Course_View from './components/Course/Course_View';
 import Course_Edit from './components/Course/Course_Edit';
 
+import Student_View from './components/Student_Admin/Student_View';
+import Student_Profile from './components/Student_Admin/Student_Profile';
+
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +34,9 @@ function App() {
             <Route exact path='/course/add' component={CourseRegister}/>
             <Route exact path='/course/view' component={Course_View}/>
             <Route exact path='/course/edit/:id' component={Course_Edit}/>
+
+            <Route exact path='/student/view/' component={Student_View}/>
+            <Route exact path='/student/edit/:id' component={Student_Profile}/>
 
           </Switch>  
             
