@@ -119,7 +119,7 @@ class Staff_View extends Component{
 
         this.fillTable=this.fillTable.bind(this);
         this.checkData= this.checkData.bind(this);
-        this.someMethod=this.someMethod.bind(this)
+
     }
 
     componentDidMount(){
@@ -171,10 +171,6 @@ class Staff_View extends Component{
 
                 }
             )
-    }
-
-    someMethod(){
-        this.forceUpdate()
     }
 
     componentWillUpdate(){

@@ -1,9 +1,37 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import { Alert,UncontrolledAlert,Button } from 'reactstrap';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+
+import {
+    BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  } from 'recharts';
 
 import Student_Row from './Student_Row';
+
+// const data = [
+//     {
+//       name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
+//     },
+//     {
+//       name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
+//     },
+//     {
+//       name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
+//     },
+//     {
+//       name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
+//     },
+//     {
+//       name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
+//     },
+//     {
+//       name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
+//     },
+//     {
+//       name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
+//     },
+//   ];
 
 class Student_View extends Component{
 
@@ -11,7 +39,8 @@ class Student_View extends Component{
         super(props);
 
         this.state={
-            students:[]
+            students:[],
+            data:[]
         }
 
         this.fillTable=this.fillTable.bind(this);
@@ -21,9 +50,43 @@ class Student_View extends Component{
     componentDidMount(){
         axios.get('http://localhost:4000/student/')
             .then(
-                students=>this.setState({students:students.data})
+                students=>{
+                    this.setState({students:students.data},()=>{
+
+                        axios.get('http://localhost:4000/course/')
+                            .then(
+                                courses=>{
+
+                                    let data=[]
+
+                                    for(let i=0;i<courses.data.length;i++){
+
+                                        let num=0;
+
+                                        this.state.students.forEach((student)=>{
+                                            
+                                            student.courses.forEach((course)=>{
+                                                if(courses.data[i]._id==course._id)
+                                                    num+=1
+                                            })
+                                        })
+
+                                        data.push({
+                                            name: courses.data[i].courseId, Num: num, amt: 2400,
+                                        })
+                                    }
+                                    this.setState({data:data})
+                                }
+                            )
+
+                    })
+                    
+                    console.log(students.data)
+                }
+                
             )
 
+        
             //console.log(this.state.staffs.length)
     }
 
@@ -46,9 +109,27 @@ class Student_View extends Component{
 
             return(
                 <div className='container' style={{marginTop:'20px'}}>
+
+                    <BarChart
+                        width={800}
+                        height={350}
+                        data={this.state.data}
+                        margin={
+                            {
+                            top: 5, right: 30, left: 20, bottom: 5,
+                        }}
+                        style={{marginLeft:'150px'}}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="Num" fill="#8884d8" />
+                        {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
+                    </BarChart>
                 
                     <div className='card'>
-                    <table className="table table-hover table-responsive-md table-striped" style={{marginTop:'5px',marginBottom:'5px'}}>
+                    <table className="table table-hover table-responsive-md table-striped" style={{paddingTop:'50px',marginBottom:'5px'}}>
                         <thead style={{backgroundColor:'#bdbdbd'}}>
                             <tr>
                                 <th scope="col">Student Name</th>
