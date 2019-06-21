@@ -10,52 +10,52 @@ import StaffTable from './Staff_Table';
 
 //Data Visualization
 
-    var data =[]
-    axios.get('http://localhost:4000/staff/')
-            .then(
-                staffs=>{
+    // var data =[]
+    // axios.get('http://localhost:4000/staff/')
+    //         .then(
+    //             staffs=>{
                     
-                    let SeniorLecturer =0;
-                        let Lecturer =0;
-                        let Instructor =0;
-                        let LabAssistant =0;
-                        let Admin =0;
+    //                 let SeniorLecturer =0;
+    //                     let Lecturer =0;
+    //                     let Instructor =0;
+    //                     let LabAssistant =0;
+    //                     let Admin =0;
 
-                        staffs.data.forEach((staff)=>{
-                            console.log(staff.profession)
-                            switch(staff.profession){
-                                case 'Senior Lecturer':
-                                    SeniorLecturer=+1;
-                                    break;
-                                case 'Lecturer':
-                                    Lecturer=+1;
-                                    break;
-                                case 'Instructor':
-                                    Instructor=+1;
-                                    break;
-                                case 'Lab Assistant':
-                                    LabAssistant=+1;
-                                    break;
-                                case 'Admin':
-                                    Admin=+1;
-                                    break;
-                            }
-                        })
-                        console.log(SeniorLecturer,Lecturer,LabAssistant,Instructor,Admin)
+    //                     staffs.data.forEach((staff)=>{
+    //                         console.log(staff.profession)
+    //                         switch(staff.profession){
+    //                             case 'Senior Lecturer':
+    //                                 SeniorLecturer=+1;
+    //                                 break;
+    //                             case 'Lecturer':
+    //                                 Lecturer=+1;
+    //                                 break;
+    //                             case 'Instructor':
+    //                                 Instructor=+1;
+    //                                 break;
+    //                             case 'Lab Assistant':
+    //                                 LabAssistant=+1;
+    //                                 break;
+    //                             case 'Admin':
+    //                                 Admin=+1;
+    //                                 break;
+    //                         }
+    //                     })
+    //                     console.log(SeniorLecturer,Lecturer,LabAssistant,Instructor,Admin)
 
-                        data = [
-                            { name: 'Admin', value: Admin },
-                            { name: 'Senior Lecturer', value: SeniorLecturer },
-                            { name: 'Lecturer', value: Lecturer },
-                            { name: 'Instructor', value: Instructor },
-                            { name: 'Lab Assisteant', value: LabAssistant }
-                        ]
+    //                     data = [
+    //                         { name: 'Admin', value: Admin },
+    //                         { name: 'Senior Lecturer', value: SeniorLecturer },
+    //                         { name: 'Lecturer', value: Lecturer },
+    //                         { name: 'Instructor', value: Instructor },
+    //                         { name: 'Lab Assisteant', value: LabAssistant }
+    //                     ]
                         
-                        console.log(data)
+    //                     console.log(data)
 
-                    console.log(staffs.data)
-                }
-            )
+    //                 console.log(staffs.data)
+    //             }
+    //         )
 
   
 const renderActiveShape = (props) => {
@@ -113,27 +113,78 @@ class Staff_View extends Component{
 
         this.state={
             staffs:[],
-            activeIndex: 0
+            activeIndex: 0,
+            data:[]
         }
 
         this.fillTable=this.fillTable.bind(this);
         this.checkData= this.checkData.bind(this);
+        this.someMethod=this.someMethod.bind(this)
     }
 
     componentDidMount(){
 
         axios.get('http://localhost:4000/staff/')
             .then(
-                staffs=>this.setState({staffs:staffs.data})
+                staffs=>{
+                    this.setState({staffs:staffs.data})
+
+                    let SeniorLecturer =0;
+                    let Lecturer =0;
+                    let Instructor =0;
+                    let LabAssistant =0;
+                    let Admin =0;
+
+                    staffs.data.forEach((staff)=>{
+                        console.log(staff.profession)
+                        switch(staff.profession){
+                            case 'Senior Lecturer':
+                                SeniorLecturer=+1;
+                                break;
+                            case 'Lecturer':
+                                Lecturer=+1;
+                                break;
+                            case 'Instructor':
+                                Instructor=+1;
+                                break;
+                            case 'Lab Assistant':
+                                LabAssistant=+1;
+                                break;
+                            case 'Admin':
+                                Admin=+1;
+                                break;
+                        }
+                    })
+                    console.log(SeniorLecturer,Lecturer,LabAssistant,Instructor,Admin)
+
+                    const data = [
+                        { name: 'Admin', value: Admin },
+                        { name: 'Senior Lecturer', value: SeniorLecturer },
+                        { name: 'Lecturer', value: Lecturer },
+                        { name: 'Instructor', value: Instructor },
+                        { name: 'Lab Assisteant', value: LabAssistant }
+                    ]
+
+                    this.setState({data:data})
+                    
+                    console.log(data)
+
+                }
             )
-            
+    }
+
+    someMethod(){
+        this.forceUpdate()
     }
 
     componentWillUpdate(){
         axios.get('http://localhost:4000/staff/')
             .then(
-                staffs=>this.setState({staffs:staffs.data})
+                staffs=>{
+                    this.setState({staffs:staffs.data})            
+                }
             )
+
     }
 
     fillTable(){
@@ -155,18 +206,18 @@ class Staff_View extends Component{
             return(
                 <div className='container' >
 
-                    <PieChart width={800} height={400} style={{marginLeft:'250px'}}>
-                            <Pie 
-                                activeIndex={this.state.activeIndex}
-                                activeShape={renderActiveShape} 
-                                data={data} 
-                                cx={300} 
-                                cy={200} 
-                                innerRadius={100}
-                                outerRadius={150} 
-                                fill="#db5400"
-                                onMouseEnter={this.onPieEnter}
-                            />
+                    <PieChart width={800} height={420} style={{marginLeft:'250px'}}>
+                        <Pie 
+                            activeIndex={this.state.activeIndex}
+                            activeShape={renderActiveShape} 
+                            data={this.state.data} 
+                            cx={300} 
+                            cy={200} 
+                            innerRadius={100}
+                            outerRadius={150} 
+                            fill="#db5400"
+                            onMouseEnter={this.onPieEnter}  
+                        />
                     </PieChart>
                 
                     <div className='card' style={{marginTop:'30px'}}>
