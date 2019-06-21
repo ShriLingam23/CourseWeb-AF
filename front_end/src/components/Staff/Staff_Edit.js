@@ -198,7 +198,7 @@ class Staff_Edit extends Component{
                                                     <option>Choose Profession ...</option>
                                                     <option> Senior Lecturer</option>
                                                     <option> Lecturer</option>
-                                                    <option> Instaructor</option>
+                                                    <option> Instructor</option>
                                                     <option> Lab Assistant</option>
                                                 </select>
                                             </div>

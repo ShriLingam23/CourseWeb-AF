@@ -31,6 +31,7 @@ class Header extends Component{
                             <Button className="navbar-toggler-icon" color="primary" onClick={this.toggle} ></Button>
                             <Collapse isOpen={this.state.collapse}>
                                 <div className="container">
+                                    <hr className="col-md-6" color='white'/>
                                     <div className="row">
                                         <div className="col-sm-8 col-md-7 py-4">
                                             <h4 className="text-white">About</h4>
@@ -45,6 +46,7 @@ class Header extends Component{
                                             </ul>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </Collapse>
                         </div>
