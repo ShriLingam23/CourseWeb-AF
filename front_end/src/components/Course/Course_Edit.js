@@ -55,6 +55,12 @@ class Course_Edit extends Component{
                         year:course.data.year,
                         semester:course.data.semester,
                         checkedStaffs:course.data.staffs
+                    },()=>{
+
+                        axios.get('http://localhost:4000/staff/')
+                            .then(
+                                staffs=>this.setState({staffs:staffs.data})
+                            )
                     })
 
                     console.log(course)
@@ -65,10 +71,7 @@ class Course_Edit extends Component{
 
             
 
-        axios.get('http://localhost:4000/staff/')
-            .then(
-                staffs=>this.setState({staffs:staffs.data})
-            )
+        
 
     }
 
