@@ -4,6 +4,7 @@ import { Alert,UncontrolledAlert,Button } from 'reactstrap';
 import {Link} from 'react-router-dom'
 
 import { PieChart, Pie, Sector } from 'recharts';
+import {TiFilter,TiRefresh} from 'react-icons/ti';
 
 import StaffTable from './Staff_Table';
 
@@ -335,10 +336,10 @@ class Staff_View extends Component{
                             </select>
                         </div>
                         <div className="col-md-2">
-                            <button className="btn btn-warning form-control" onClick={this.filterStaff}>Filter</button>
+                            <button className="btn btn-warning form-control" onClick={this.filterStaff}>Filter <TiFilter size='30px'/></button>
                         </div>
                         <div className="col-md-2">
-                            <button className="btn btn-danger form-control" onClick={this.resetStaff}>Reset</button>
+                            <button className="btn btn-danger form-control" onClick={this.resetStaff}>Reset <TiRefresh size='30px'/></button>
                         </div>
                     </div>
 

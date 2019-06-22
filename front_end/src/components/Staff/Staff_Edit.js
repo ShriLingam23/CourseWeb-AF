@@ -196,6 +196,7 @@ class Staff_Edit extends Component{
                                                 </div>   
                                                 <select name="profession" className="form-control" onChange={this.onValueChange} value={this.state.profession}>
                                                     <option>Choose Profession ...</option>
+                                                    <option> Admin</option>
                                                     <option> Senior Lecturer</option>
                                                     <option> Lecturer</option>
                                                     <option> Instructor</option>

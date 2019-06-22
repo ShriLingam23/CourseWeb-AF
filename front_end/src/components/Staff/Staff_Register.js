@@ -146,6 +146,7 @@ class Staff_Register extends Component{
                                 </div>   
                                 <select name="profession" className="form-control" onChange={this.onValueChange}>
                                     <option selected>Choose Profession ...</option>
+                                    <option> Admin</option>
                                     <option> Senior Lecturer</option>
                                     <option> Lecturer</option>
                                     <option> Instaructor</option>
