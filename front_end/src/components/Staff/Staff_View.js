@@ -114,11 +114,15 @@ class Staff_View extends Component{
         this.state={
             staffs:[],
             activeIndex: 0,
-            data:[]
+            data:[],
+            filteredStaff:[]
         }
 
         this.fillTable=this.fillTable.bind(this);
         this.checkData= this.checkData.bind(this);
+
+        this.resetStaff =this.resetStaff.bind(this);
+        this.filterStaff = this.filterStaff.bind(this);
 
     }
 
@@ -127,7 +131,7 @@ class Staff_View extends Component{
         axios.get('http://localhost:4000/staff/')
             .then(
                 staffs=>{
-                    this.setState({staffs:staffs.data})
+                    this.setState({staffs:staffs.data,filteredStaff:staffs.data})
 
                     let SeniorLecturer =0;
                     let Lecturer =0;
@@ -162,7 +166,7 @@ class Staff_View extends Component{
                         { name: 'Senior Lecturer', value: SeniorLecturer },
                         { name: 'Lecturer', value: Lecturer },
                         { name: 'Instructor', value: Instructor },
-                        { name: 'Lab Assisteant', value: LabAssistant }
+                        { name: 'Lab Assistant', value: LabAssistant }
                     ]
 
                     this.setState({data:data})
@@ -185,7 +189,7 @@ class Staff_View extends Component{
 
     fillTable(){
 
-        return this.state.staffs.map(staff=>{
+        return this.state.filteredStaff.map(staff=>{
             return <StaffTable key={staff._id} staff={staff}/>
         })
     }
@@ -195,6 +199,62 @@ class Staff_View extends Component{
           activeIndex: index,
         });
     };
+
+    resetStaff(){
+        this.setState({filteredStaff:this.state.staffs})
+    }
+
+    filterStaff(){
+        const staffOption = document.getElementById("staff");
+        const index = staffOption.selectedIndex;
+
+        console.log(index)
+
+        if(index!=0){
+
+            let filteredStaff= this.state.staffs.filter(staff=>{
+                console.log(staff.profession)
+                switch(staff.profession){
+                    case 'Admin':
+                        if(index==1)
+                            return staff;
+
+                        break;
+
+                    case 'Senior Lecturer':
+                            if(index==2)
+                                return staff;
+    
+                            break;
+
+                    case 'Lecturer':
+                            if(index==3){
+                                // console.log('Lecturer')
+                                return staff
+                            }
+                            console.log('Lecturer')
+                            break;
+
+                    case 'Instructor':
+                            if(index==4)
+                                return staff;
+    
+                            break;
+
+                    case 'Lab Assistant':
+                            if(index==5)
+                                return staff;
+    
+                            break;
+                }
+                
+            })
+            console.log(filteredStaff)
+            this.setState({filteredStaff:filteredStaff})
+
+        }
+
+    }
 
     checkData(){
         if(this.state.staffs.length>0){
@@ -215,6 +275,25 @@ class Staff_View extends Component{
                             onMouseEnter={this.onPieEnter}  
                         />
                     </PieChart>
+
+                    <div className="row">
+                        <div className="col-md-8">
+                            <select className="form-control" id="staff">
+                                <option>Choose a Profession...</option>
+                                <option>Admin</option>
+                                <option>Senior Lecturer</option>
+                                <option>Lecturer</option>
+                                <option>Instructor</option>
+                                <option>Lab Assistant</option>
+                            </select>
+                        </div>
+                        <div className="col-md-2">
+                            <button className="btn btn-warning form-control" onClick={this.filterStaff}>Filter</button>
+                        </div>
+                        <div className="col-md-2">
+                            <button className="btn btn-danger form-control" onClick={this.resetStaff}>Reset</button>
+                        </div>
+                    </div>
                 
                     <div className='card' style={{marginTop:'30px'}}>
                     <table className="table table-hover table-responsive-md table-striped" style={{marginBottom:'5px'}}>
