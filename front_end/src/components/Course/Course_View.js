@@ -39,7 +39,9 @@ class Course_View extends Component{
         super(props);
 
         this.state={
-            courses:[]
+            courses:[],
+            students:[],
+            data:[]
         }
 
         this.fillTable=this.fillTable.bind(this);
@@ -49,7 +51,42 @@ class Course_View extends Component{
     componentDidMount(){
         axios.get('http://localhost:4000/course/')
             .then(
-                courses=>this.setState({courses:courses.data})
+                courses=>{
+                    this.setState({courses:courses.data},()=>{
+
+                        console.log(this.state.courses)
+                        axios.get('http://localhost:4000/student/')
+                        .then(
+                            students=>{
+                                this.setState({students:students.data},()=>{
+
+                                    let data=[]
+                                    this.state.courses.forEach((course)=>{
+
+                                        let Stu_Num=0;
+                                        let Staff_Num=course.staffs.length;
+
+                                        this.state.students.forEach((student)=>{
+                                            
+                                            student.courses.forEach((Stu_course)=>{
+                                                if(course._id==Stu_course._id)
+                                                    Stu_Num+=1
+                                            })
+                                        })
+
+                                        data.push({
+                                            name: course.courseId, staffs: Staff_Num, students: Stu_Num, amt: 2400,
+                                          })
+                                    })
+                                    console.log(data)
+                                    this.setState({data:data})
+                                })
+                            })
+                    })
+
+
+
+                }
             )
 
             //console.log(this.state.staffs.length)
@@ -78,7 +115,7 @@ class Course_View extends Component{
                     <LineChart
                         width={800}
                         height={340}
-                        data={data}
+                        data={this.state.data}
                         margin={{
                             top: 5, right: 30, left: 20, bottom: 5,
                         }}
@@ -90,8 +127,8 @@ class Course_View extends Component{
                         <YAxis stroke="#000"/>
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="pv" stroke="#db5400" activeDot={{ r: 8 }} />
-                        <Line type="monotone" dataKey="uv" stroke="#f5a800" />
+                        <Line type="monotone" dataKey="staffs" stroke="#db5400" activeDot={{ r: 8 }} />
+                        <Line type="monotone" dataKey="students" stroke="#f5a800" />
 
                     </LineChart>
                 
