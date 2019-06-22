@@ -16,9 +16,12 @@ const upload = multer({ storage: storage });
 //Create a new Course
 router.post("/uploadfile", upload.single("file"), function(req, res, next){
     var new_file = new File;
+    console.log(req.file)
 
     new_file.file.data = fs.readFileSync(req.file.path);
-    new_file.file.contentType = 'image/png';
+    new_file.file.contentType = req.file.mimetype;
+    console.log(new_file.file.contentType)
+    // new_file.file.contentType = 'image/png';
 
     console.log(req.file.path,new_file.file.data)
 

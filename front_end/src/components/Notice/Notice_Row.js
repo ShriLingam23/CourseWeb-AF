@@ -27,7 +27,8 @@ class Notice_Row extends Component{
         var binary = '';
         var bytes = [].slice.call(new Uint8Array(this.state.image.file.data.data));
         bytes.forEach((b) => binary += String.fromCharCode(b));
-        console.log(window.btoa(binary))
+        // console.log(window.btoa(binary))
+        console.log(this.state.image.file.contentType)
 
         this.setState({
             path:window.btoa(binary)
@@ -56,7 +57,7 @@ class Notice_Row extends Component{
         return(
             <tr>
                 <hr className="mb-6"/>
-                <img src={`data:image/png;base64,${this.state.path}`} alt='Helpful alt text' height="350px"/>
+                <img src={`data:${this.state.image.file.contentType};base64,${this.state.path}`} alt='Helpful alt text' height="350px"/>
                 <p className="text-muted"><em>Added : {date+" "+time}</em></p>
                 <td >
                     <tr>
@@ -65,7 +66,7 @@ class Notice_Row extends Component{
                             style={{height:'150px',width:'100px',marginTop:'-50px'}} >
                                 <IoIosEye size='40px'/> 
                                 <ModalImage
-                                    large={`data:image/png;base64,${this.state.path}`}
+                                    large={`data:${this.state.image.file.contentType};base64,${this.state.path}`}
                                     alt="View"
                                     /></Button>
                     </tr>

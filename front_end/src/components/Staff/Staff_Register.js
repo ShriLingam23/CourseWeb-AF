@@ -36,6 +36,12 @@ class Staff_Register extends Component{
         this.onDismiss = this.onDismiss.bind(this);
         this.newlyAdded = this.newlyAdded.bind(this);
         this.checkPending = this.checkPending.bind(this);
+
+        this.buildPassword=this.buildPassword.bind(this);
+    }
+
+    componentDidMount(){
+        this.buildPassword()
     }
 
     onDismiss() {
@@ -52,6 +58,28 @@ class Staff_Register extends Component{
                 </div>
             );
         }
+    }
+
+    buildPassword = () => {
+        let a = "",
+            b = "abcdefghijklmnopqrstuvwxyz1234567890",
+            c = 8;
+        for(let ma = 0; ma < c; ma++) {
+          a += b[Math.floor(Math.random() * b.length)];
+        }
+        this.setState(state => ({
+          password: a
+        }));
+    }
+
+    showPass(){
+        var x = document.getElementById("pass");
+        x.type="text";
+    }
+
+    hidePass(){
+        var x = document.getElementById("pass");
+        x.type="password";
     }
 
     checkPending(){
@@ -101,13 +129,16 @@ class Staff_Register extends Component{
                                     <div className="input-group-text"><MdLock/></div>
                                 </div>
                                 <input 
+                                    id="pass"
                                     name="password" 
                                     placeholder="Password" 
                                     className="form-control" 
-                                    required="required" 
+                                    readOnly 
                                     type="password"
                                     onChange={this.onValueChange}
-                                    value={this.state.password} />
+                                    value={this.state.password}
+                                    onMouseOver={this.showPass.bind(this)}
+                                    onMouseOut={this.hidePass.bind(this)} />
                             </div>
                             <div className="input-group form-group col-md-6">
                                 <div className="input-group-prepend">

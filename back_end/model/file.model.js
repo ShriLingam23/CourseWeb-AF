@@ -5,6 +5,9 @@ var FileSchema = new Schema({
         file: { 
             data: Buffer, 
             contentType: String
+        },
+        dataType:{
+            type:String
         }
     },
     {    timestamps: true
