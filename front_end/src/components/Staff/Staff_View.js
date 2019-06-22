@@ -189,9 +189,54 @@ class Staff_View extends Component{
 
     fillTable(){
 
-        return this.state.filteredStaff.map(staff=>{
-            return <StaffTable key={staff._id} staff={staff}/>
-        })
+        if(this.state.filteredStaff.length!=0){
+            return (
+                <div className='card' style={{marginTop:'30px'}}>
+                    <table className="table table-hover table-responsive-md table-striped" style={{marginBottom:'5px'}}>
+                        <thead style={{backgroundColor:'#bdbdbd'}}>
+                            <tr>
+                                <th scope="col">Staff Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Profession</th>
+                                <th scope="col">Contact Number</th>
+                                <th scope="col">Location</th>
+                                <th scope="col" colSpan='2'></th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                        {
+                            this.state.filteredStaff.map(staff=>{
+                                return <StaffTable key={staff._id} staff={staff}/>
+                            })
+                        }
+                    </tbody>
+                    </table>
+                </div>
+                
+            )
+            
+            
+            
+        }
+        else{
+            return(
+                <div className='container' style={{marginTop:'20px'}}>
+                    <UncontrolledAlert color="warning">
+                        <h4 className="alert-heading">No Data Available</h4>
+                        <p>
+                        Aww yeah, you successfully read this important alert message. This example text is going
+                        to run a bit longer so that you can see how spacing within an alert works with this kind
+                        of content.
+                        </p>
+                        <hr />
+                        <p className="mb-0">
+                        Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
+                        </p>
+                    </UncontrolledAlert>
+                </div>
+            )
+        }
+        
     }
 
     onPieEnter = (data, index) => {
@@ -202,6 +247,8 @@ class Staff_View extends Component{
 
     resetStaff(){
         this.setState({filteredStaff:this.state.staffs})
+        const staffOption = document.getElementById("staff");
+        staffOption.selectedIndex=0;
     }
 
     filterStaff(){
@@ -294,24 +341,9 @@ class Staff_View extends Component{
                             <button className="btn btn-danger form-control" onClick={this.resetStaff}>Reset</button>
                         </div>
                     </div>
-                
-                    <div className='card' style={{marginTop:'30px'}}>
-                    <table className="table table-hover table-responsive-md table-striped" style={{marginBottom:'5px'}}>
-                        <thead style={{backgroundColor:'#bdbdbd'}}>
-                            <tr>
-                                <th scope="col">Staff Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Profession</th>
-                                <th scope="col">Contact Number</th>
-                                <th scope="col">Location</th>
-                                <th scope="col" colSpan='2'></th>
-                            </tr>
-                        </thead>
-                    <tbody>
-                        {this.fillTable()}
-                    </tbody>
-                    </table>
-                    </div>
+
+                    {this.fillTable()}
+                    
     
                 </div>
             )
