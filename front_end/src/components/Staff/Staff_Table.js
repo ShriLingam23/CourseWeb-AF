@@ -16,7 +16,7 @@ class Staff_Table extends Component{
     }
 
     onDelete(){
-        axios.get('http://localhost:4000/staff/delete/'+this.state.staff._id)
+        axios.get('http://localhost:4000/admin/staff/delete/'+this.state.staff._id)
             .then(
                 res => console.log(res.data)
             )

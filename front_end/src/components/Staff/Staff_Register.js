@@ -18,7 +18,7 @@ class Staff_Register extends Component{
 
     constructor(props) {
         super(props);
-        // this.toggle = this.toggle.bind(this);
+
         this.state = { 
             visible: false,
             pending: false,
@@ -255,7 +255,7 @@ class Staff_Register extends Component{
             response
         }
 
-        axios.post('http://localhost:4000/staff/add',staff)
+        axios.post('http://localhost:4000/admin/staff/add',staff)
             .then(
                 res=>{
                     console.log(res.data)

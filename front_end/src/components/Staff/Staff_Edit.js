@@ -42,7 +42,7 @@ class Staff_Edit extends Component{
     }
 
     componentDidMount(){
-        axios.get('http://localhost:4000/staff/edit/'+this.props.match.params.id)
+        axios.get('http://localhost:4000/admin/staff/edit/'+this.props.match.params.id)
             .then(
                 staff =>{
                     this.setState({
@@ -240,7 +240,7 @@ class Staff_Edit extends Component{
             response
         }
 
-        axios.post('http://localhost:4000/staff/update/'+this.props.match.params.id,staff)
+        axios.post('http://localhost:4000/admin/staff/update/'+this.props.match.params.id,staff)
             .then(
                 res=>{
                     console.log(res.data)
@@ -296,20 +296,10 @@ class Staff_Edit extends Component{
                 response
             }
 
-            axios.post('http://localhost:4000/staff/reset/'+this.props.match.params.id,staff)
+            axios.post('http://localhost:4000/admin/staff/reset/'+this.props.match.params.id,staff)
             .then(
                 res=>{
                     console.log(res.data)
-                    // document.getElementById('staffForm').reset()
-                    // this.setState({
-                    //     visible:true,
-                    //     fullName:'',
-                    //     email:'',
-                    //     password:'',
-                    //     profession:'',
-                    //     contactNum:'',
-                    //     location:'',
-                    //     response:''});
 
                     if(res.data.MAIL=='Successfully Sent'){
                         this.setState({pending:false})
@@ -331,7 +321,6 @@ class Staff_Edit extends Component{
                           )
                     }
                     
-
                 },
                 err=>console.log(err)
             )

@@ -10,54 +10,6 @@ import StaffTable from './Staff_Table';
 
 
 //Data Visualization
-
-    // var data =[]
-    // axios.get('http://localhost:4000/staff/')
-    //         .then(
-    //             staffs=>{
-                    
-    //                 let SeniorLecturer =0;
-    //                     let Lecturer =0;
-    //                     let Instructor =0;
-    //                     let LabAssistant =0;
-    //                     let Admin =0;
-
-    //                     staffs.data.forEach((staff)=>{
-    //                         console.log(staff.profession)
-    //                         switch(staff.profession){
-    //                             case 'Senior Lecturer':
-    //                                 SeniorLecturer=+1;
-    //                                 break;
-    //                             case 'Lecturer':
-    //                                 Lecturer=+1;
-    //                                 break;
-    //                             case 'Instructor':
-    //                                 Instructor=+1;
-    //                                 break;
-    //                             case 'Lab Assistant':
-    //                                 LabAssistant=+1;
-    //                                 break;
-    //                             case 'Admin':
-    //                                 Admin=+1;
-    //                                 break;
-    //                         }
-    //                     })
-    //                     console.log(SeniorLecturer,Lecturer,LabAssistant,Instructor,Admin)
-
-    //                     data = [
-    //                         { name: 'Admin', value: Admin },
-    //                         { name: 'Senior Lecturer', value: SeniorLecturer },
-    //                         { name: 'Lecturer', value: Lecturer },
-    //                         { name: 'Instructor', value: Instructor },
-    //                         { name: 'Lab Assisteant', value: LabAssistant }
-    //                     ]
-                        
-    //                     console.log(data)
-
-    //                 console.log(staffs.data)
-    //             }
-    //         )
-
   
 const renderActiveShape = (props) => {
 
@@ -129,7 +81,7 @@ class Staff_View extends Component{
 
     componentDidMount(){
 
-        axios.get('http://localhost:4000/staff/')
+        axios.get('http://localhost:4000/admin/staff/')
             .then(
                 staffs=>{
                     this.setState({staffs:staffs.data,filteredStaff:staffs.data})
@@ -179,7 +131,7 @@ class Staff_View extends Component{
     }
 
     componentWillUpdate(){
-        axios.get('http://localhost:4000/staff/')
+        axios.get('http://localhost:4000/admin/staff/')
             .then(
                 staffs=>{
                     this.setState({staffs:staffs.data})            
