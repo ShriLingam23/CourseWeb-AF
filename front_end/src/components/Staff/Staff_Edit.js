@@ -153,6 +153,29 @@ class Staff_Edit extends Component{
                 location,
                 response
             }
+
+            axios.post('http://localhost:4000/staff/reset/'+this.props.match.params.id,staff)
+            .then(
+                res=>{
+                    console.log(res.data)
+                    // document.getElementById('staffForm').reset()
+                    // this.setState({
+                    //     visible:true,
+                    //     fullName:'',
+                    //     email:'',
+                    //     password:'',
+                    //     profession:'',
+                    //     contactNum:'',
+                    //     location:'',
+                    //     response:''});
+
+                },
+                err=>console.log(err)
+            )
+        
+        setTimeout(()=>{
+            this.props.history.push('/staff/view')
+        },1500);
         });
     }
 
