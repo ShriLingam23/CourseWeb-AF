@@ -103,7 +103,7 @@ router.route('/reset/:id').post(function(req,res){
                     }
                 });
 
-
+                console.log(__dirname)
                 //Manipulating data to ejs mail template
                 ejs.renderFile(__dirname + "/../template/Reset.ejs", { name: req.body.fullName,email:req.body.email,password:req.body.password }, function (err, data) {
                     if (err) {

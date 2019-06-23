@@ -314,11 +314,14 @@ class Staff_Edit extends Component{
                         },1500);
                     }
                     else{
+                        this.setState({pending:false})
+
                         Swal.fire(
                             'The Internet?',
                             'That thing is still around?',
                             'question'
                           )
+
                     }
                     
                 },
