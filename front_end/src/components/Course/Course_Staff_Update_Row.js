@@ -1,6 +1,4 @@
 import React,{Component} from 'react';
-import { Button } from 'reactstrap';
-import axios from 'axios';
 import icons from '../../../node_modules/glyphicons'
 
 import '../../assets/css/CheckBox.css'
@@ -35,9 +33,7 @@ class Course_Staff_Update_Row extends Component{
         return(
             <tr>
                 <th scope="row">{this.state.staff.fullName}</th>
-                {/* <td scope="col">{this.state.staff.email}</td> */}
                 <td scope="col">{this.state.staff.profession}</td>
-                {/* <td scope="col">{this.state.staff.contactNum}</td> */}
                 <td scope="col">{this.state.staff.location}</td>
 
                 <label style={{marginTop:'5px'}} className="btn btn-warning text-dark">Assign 

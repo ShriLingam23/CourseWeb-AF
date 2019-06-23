@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
 import { Alert ,Spinner} from 'reactstrap';
 
 import {FiBook} from 'react-icons/fi'
@@ -19,7 +18,7 @@ class Course_Register extends Component{
 
     constructor(props) {
         super(props);
-        // this.toggle = this.toggle.bind(this);
+
         this.state = { 
             visible: false,
             pending: false,
@@ -44,7 +43,7 @@ class Course_Register extends Component{
     }
 
     componentDidMount(){
-        axios.get('http://localhost:4000/staff/')
+        axios.get('http://localhost:4000/admin/staff/')
             .then(
                 staffs=>this.setState({staffs:staffs.data})
             )
@@ -204,9 +203,7 @@ class Course_Register extends Component{
                                         <thead >
                                             <tr>
                                                 <th scope="col">Staff Name</th>
-                                                {/* <th scope="col">Email</th> */}
                                                 <th scope="col">Profession</th>
-                                                {/* <th scope="col">Contact Number</th> */}
                                                 <th scope="col">Location</th>
                                                 <th scope="col" colSpan='2'></th>
                                             </tr>
@@ -274,7 +271,7 @@ class Course_Register extends Component{
             staffs
         }
 
-        axios.post('http://localhost:4000/course/add',course)
+        axios.post('http://localhost:4000/admin/course/add',course)
             .then(
                 res=>{
                     console.log(res.data)

@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
-import { Alert ,Spinner} from 'reactstrap';
+import { Alert } from 'reactstrap';
 
 import {FiBook} from 'react-icons/fi'
 
@@ -44,7 +43,7 @@ class Course_Edit extends Component{
 
     componentDidMount(){
 
-        axios.get('http://localhost:4000/course/edit/'+this.props.match.params.id)
+        axios.get('http://localhost:4000/admin/course/edit/'+this.props.match.params.id)
             .then(
                 course =>{
                     this.setState({
@@ -57,7 +56,7 @@ class Course_Edit extends Component{
                         checkedStaffs:course.data.staffs
                     },()=>{
 
-                        axios.get('http://localhost:4000/staff/')
+                        axios.get('http://localhost:4000/admin/staff/')
                             .then(
                                 staffs=>this.setState({staffs:staffs.data})
                             )
@@ -154,7 +153,7 @@ class Course_Edit extends Component{
             staffs
         }
 
-        axios.post('http://localhost:4000/course/update/'+this.props.match.params.id,course)
+        axios.post('http://localhost:4000/admin/course/update/'+this.props.match.params.id,course)
             .then(
                 res=>{
                     console.log(res.data)

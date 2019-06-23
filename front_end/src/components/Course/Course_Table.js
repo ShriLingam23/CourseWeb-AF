@@ -16,7 +16,7 @@ class Course_Table extends Component{
     }
 
     onDelete(){
-        axios.get('http://localhost:4000/course/delete/'+this.state.course._id)
+        axios.get('http://localhost:4000/admin/course/delete/'+this.state.course._id)
             .then(
                 res => console.log(res.data)
             )
