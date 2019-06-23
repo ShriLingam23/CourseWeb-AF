@@ -149,7 +149,7 @@ class Staff_Edit extends Component{
                                 {/* form section */}
                                 <div className="col-md-8 py-5 border">
                                     <h4 className="pb-4">Please Fill Staff Member details</h4>
-                                    <form id='staffForm'>
+                                    <form id='staffForm' onSubmit={this.onFormSubmit}>
                                         <div className="form-row">
                                             <div className="input-group form-group col-md-6">
                                             <div className="input-group-prepend">
@@ -160,6 +160,7 @@ class Staff_Edit extends Component{
                                                 placeholder="Full Name" 
                                                 className="form-control" 
                                                 type="text"
+                                                pattern="[A-Za-z]{*}"
                                                 onChange={this.onValueChange}
                                                 value={this.state.fullName} />
                                             </div>
@@ -172,6 +173,8 @@ class Staff_Edit extends Component{
                                                 placeholder="Email"
                                                 className="form-control"
                                                 type="email"
+                                                pattern="/^[a-z0-9_]{*}+@[a-z0-9]{*}+.[a-z]{2,4}$/"
+                                                title="Email field not matched"
                                                 onChange={this.onValueChange}
                                                 value={this.state.email} />
                                             </div>
@@ -215,6 +218,8 @@ class Staff_Edit extends Component{
                                                     className="form-control" 
                                                     required="required" 
                                                     type="tel" 
+                                                    pattern="[0-9]{10}"
+                                                    title="Contact Number can only contain 10 digits"
                                                     onChange={this.onValueChange}
                                                     value={this.state.contactNum}/>
                                             </div>
@@ -258,7 +263,7 @@ class Staff_Edit extends Component{
                                         </div>
                                         
                                         <div className="form-row" style={{display:'flex',justifyContent:'center'}}>
-                                            <button type='submit' className="btn btn-danger" onClick={this.onFormSubmit}>Save changes</button>
+                                            <button type='submit' className="btn btn-danger" >Save changes</button>
                                         </div>
 
                                     </form>
