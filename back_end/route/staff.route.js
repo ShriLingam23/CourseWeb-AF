@@ -112,7 +112,7 @@ router.route('/reset/:id').post(function(req,res){
                         var mainOptions = {
                             from: '"FindMyTrip" findmytrip2017@gmail.com',
                             to: req.body.email,
-                            subject: 'Account Activated',
+                            subject: 'Password Changed',
                             html: data
                         };
                         // console.log("html data ======================>", mainOptions.html);
