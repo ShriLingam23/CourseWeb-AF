@@ -19,6 +19,7 @@
     "react-scripts": "3.0.0",
     "reactstrap": "^8.0.0",
     "recharts": "^1.6.2",
+    "semantic-ui-react": "^0.87.2",
     "sweetalert2": "^8.12.1"
   },
   "scripts": {

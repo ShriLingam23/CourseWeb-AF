@@ -1,16 +1,16 @@
 import React,{Component} from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
 import { Alert ,Spinner} from 'reactstrap';
 import Swal from 'sweetalert2'
 
-import logo from '../logo.svg'
 import { MdEmail } from "react-icons/md";
 import { MdPhone } from "react-icons/md";
 import { MdPerson } from "react-icons/md";
 import { MdLock } from "react-icons/md";
 import { MdPlace } from "react-icons/md";
 import { MdCardTravel } from "react-icons/md";
+
+import {FiUser} from 'react-icons/fi'
 
 
 class Staff_Edit extends Component{
@@ -355,10 +355,11 @@ class Staff_Edit extends Component{
                             <div className='row' >
                                 <div className='col-md-4 bg-info text-white text-center'>
                                     <div className="card-body" >
-                                        <img src={logo} />
-                                        <h2 className="py-3">Registration</h2>
+                                        {/* <img src={logo} /> */}
+                                        <FiUser size="200px" style={{paddingTop:'50px'}}/>
+                                        <h2 className="py-3">Update</h2>
                                         <p>
-                                            Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.
+                                        This new employee registration form template registers the applicants. This staff registration form collects applicants' information such as contact number, address and resume.
 
                                         </p>
                                     </div>

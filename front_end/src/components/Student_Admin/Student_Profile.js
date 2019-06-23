@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 
-import logo from '../logo.svg'
 
 import {IoIosPerson} from "react-icons/io"
 import {IoIosContact} from "react-icons/io"
@@ -9,6 +8,8 @@ import {IoIosKey} from "react-icons/io"
 import {MdPhone} from "react-icons/md"
 import {IoIosMail} from "react-icons/io"
 import {IoIosBook} from "react-icons/io"
+
+import {FiUserCheck} from 'react-icons/fi'
 
 import Student_Course_Row from './Student_Course_Row'
 
@@ -98,10 +99,10 @@ class Student_Profile extends Component{
                             <div className='row' >
                                 <div className='col-md-4 bg-info text-white text-center'>
                                     <div className="card-body" >
-                                        <img src={logo} />
-                                        <h2 className="py-3">Student Profile</h2>
+                                    <FiUserCheck size="200px" style={{paddingTop:'50px'}}/>
+                                        <h2 className="py-3">Profile</h2>
                                         <p>
-                                            Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.
+                                        Elective/Humanity Registration Course Web Student Profile Official Requests ... Life at LOOPs promises a vibrant future for our students. Student interactive communities, clubs & societies, sports and competitions
 
                                         </p>
                                     </div>

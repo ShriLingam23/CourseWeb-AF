@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom'
 import { Alert ,Spinner} from 'reactstrap';
 
-import logo from '../logo.svg'
+import {FiBook} from 'react-icons/fi'
 
 import {IoIosKey} from "react-icons/io"
 import {IoMdStarHalf} from "react-icons/io"
@@ -311,11 +311,10 @@ class Course_Register extends Component{
                             <div className='row' >
                                 <div className='col-md-4 bg-info text-white text-center'>
                                     <div className="card-body" >
-                                        <img src={logo} />
-                                        <h2 className="py-3">New Course</h2>
+                                        <FiBook size="200px" style={{paddingTop:'50px'}}/>
+                                        <h2 className="py-3">Course Add</h2>
                                         <p>
-                                            Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.
-
+                                        Courses are designed for continuing personal development and are offered by a number of leading universities, schools, and other educational institutions around the world.
                                         </p>
                                     </div>
                                 </div>
