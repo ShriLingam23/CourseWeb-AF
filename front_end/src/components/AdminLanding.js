@@ -1,9 +1,6 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom'
-import axios from 'axios';
-import { Collapse, Button } from 'reactstrap';
 
-import logo from '../components/logo.svg'
 import course from '../assets/img/login.jpg'
 import instructor from '../assets/img/groupStudy.jpg'
 import student from '../assets/img/graduate.jpg'

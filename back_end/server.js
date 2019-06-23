@@ -18,16 +18,16 @@ mongoose.connect(config.DB,{useNewUrlParser:true})
     );
 
 const staffRoute = require('./route/staff.route')
-app.use('/staff',staffRoute)
+app.use('/admin/staff',staffRoute)
 
 const courseRoute = require('./route/course.route')
-app.use('/course',courseRoute)
+app.use('/admin/course',courseRoute)
 
 const fileRoute = require('./route/file.route')
-app.use('/file',fileRoute)
+app.use('/admin/file',fileRoute)
 
 const studentRoute = require('./route/student.route')
-app.use('/student',studentRoute)
+app.use('/admin/student',studentRoute)
 
 app.listen(PORT,()=>{
     console.log("Server listening on port ",PORT)

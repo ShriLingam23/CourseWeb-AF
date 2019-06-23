@@ -36,7 +36,7 @@ class Student_Profile extends Component{
 
     componentDidMount(){
 
-        axios.get('http://localhost:4000/student/edit/'+this.props.match.params.id)
+        axios.get('http://localhost:4000/admin/student/edit/'+this.props.match.params.id)
             .then(
                 student =>{
                     this.setState({

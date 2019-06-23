@@ -16,7 +16,7 @@ class Student_Row extends Component{
     }
 
     onDelete(){
-        axios.get('http://localhost:4000/student/delete/'+this.state.student._id)
+        axios.get('http://localhost:4000/admin/student/delete/'+this.state.student._id)
             .then(
                 res => console.log(res.data)
             )
