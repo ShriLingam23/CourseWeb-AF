@@ -34,6 +34,8 @@ class Staff_Edit extends Component{
 
         this.onDismiss = this.onDismiss.bind(this);
         this.newlyUpdated = this.newlyUpdated.bind(this);
+
+        this.resetPassword= this.resetPassword.bind(this);
     }
 
     componentDidMount(){
@@ -122,6 +124,38 @@ class Staff_Edit extends Component{
         
     }
 
+    resetPassword(){
+        alert('hello')
+
+        let a = "",
+            b = "abcdefghijklmnopqrstuvwxyz1234567890",
+            c = 8;
+        for(let ma = 0; ma < c; ma++) {
+          a += b[Math.floor(Math.random() * b.length)];
+        }
+        this.setState({password: a},()=>{
+
+            const fullName = this.state.fullName;
+            const email = this.state.email;
+            const password = this.state.password;
+            const profession = this.state.profession;
+            const contactNum = this.state.contactNum;
+            const location = this.state.location;
+            const response = this.state.response;
+            console.log(fullName,email,password,profession,contactNum,location,response)
+
+            const staff={
+                fullName,
+                email,
+                password,
+                profession,
+                contactNum,
+                location,
+                response
+            }
+        });
+    }
+
     render(){
         return(
             <div className="container" style={{paddingTop:'20px'}}>
@@ -160,7 +194,7 @@ class Staff_Edit extends Component{
                                                 placeholder="Full Name" 
                                                 className="form-control" 
                                                 type="text"
-                                                pattern="[A-Za-z]{*}"
+                                                pattern="[A-Za-z ]{1,}"
                                                 onChange={this.onValueChange}
                                                 value={this.state.fullName} />
                                             </div>
@@ -264,6 +298,7 @@ class Staff_Edit extends Component{
                                         
                                         <div className="form-row" style={{display:'flex',justifyContent:'center'}}>
                                             <button type='submit' className="btn btn-danger" >Save changes</button>
+                                            <button type='button' className="btn btn-warning" onClick={this.resetPassword} style={{marginLeft:'25px'}}>Reset Password</button>
                                         </div>
 
                                     </form>

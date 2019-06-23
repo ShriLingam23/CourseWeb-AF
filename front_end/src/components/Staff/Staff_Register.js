@@ -107,7 +107,7 @@ class Staff_Register extends Component{
                                 placeholder="Full Name" 
                                 className="form-control" 
                                 type="text"
-                                pattern="[A-Za-z]"
+                                pattern="[A-Za-z ]{1,}"
                                 onChange={this.onValueChange}
                                 value={this.state.fullName} />
                             </div>

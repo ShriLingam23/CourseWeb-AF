@@ -240,6 +240,7 @@ class Course_Edit extends Component{
                                                     className="form-control"
                                                     required="required"
                                                     type="text"
+                                                    pattern="[A-Za-z ]{1,}"
                                                     onChange={this.onValueChange}
                                                     value={this.state.courseName} />
                                             </div>
@@ -256,6 +257,7 @@ class Course_Edit extends Component{
                                                     className="form-control" 
                                                     required="required" 
                                                     type="password"
+                                                    pattern="\S+"
                                                     onChange={this.onValueChange}
                                                     value={this.state.enrollment} 
                                                     onMouseOver={this.showPass.bind(this)}
