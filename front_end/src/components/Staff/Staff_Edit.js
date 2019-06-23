@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
-import { Alert } from 'reactstrap';
+import { Alert ,Spinner} from 'reactstrap';
+import Swal from 'sweetalert2'
 
 import logo from '../logo.svg'
 import { MdEmail } from "react-icons/md";
@@ -25,7 +26,8 @@ class Staff_Edit extends Component{
             profession:'',
             contactNum:'',
             location:'',
-            response:''
+            response:'',
+            pending:false
 
         };
 
@@ -36,6 +38,7 @@ class Staff_Edit extends Component{
         this.newlyUpdated = this.newlyUpdated.bind(this);
 
         this.resetPassword= this.resetPassword.bind(this);
+        this.checkVisible = this.checkVisible.bind(this);
     }
 
     componentDidMount(){
@@ -57,6 +60,144 @@ class Staff_Edit extends Component{
 
     onDismiss() {
         this.setState({ visible: false });
+    }
+
+    checkVisible(){
+
+        if(this.state.pending){
+            return(
+                <div style={{marginTop:'120px',marginLeft:'230px'}}>
+                    <Spinner type="grow" color="warning" style={{ width: '15rem', height: '15rem' }}/>
+                </div>
+            )
+
+        }
+        else{
+            return(
+                <div className="col-md-8 py-5 border">
+                    <h4 className="pb-4">Please Fill Staff Member details</h4>
+                    <form id='staffForm' onSubmit={this.onFormSubmit}>
+                        <div className="form-row">
+                            <div className="input-group form-group col-md-6">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text"><MdPerson/></div>
+                            </div>
+                            <input 
+                                name="fullName" 
+                                placeholder="Full Name" 
+                                className="form-control" 
+                                type="text"
+                                pattern="[A-Za-z ]{1,}"
+                                onChange={this.onValueChange}
+                                value={this.state.fullName} />
+                            </div>
+                        <div className="input-group form-group col-md-6">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text"><MdEmail/></div>
+                            </div>
+                            <input 
+                                name="email" 
+                                placeholder="Email"
+                                className="form-control"
+                                type="email"
+                                pattern="/^[a-z0-9_]{*}+@[a-z0-9]{*}+.[a-z]{2,4}$/"
+                                title="Email field not matched"
+                                onChange={this.onValueChange}
+                                value={this.state.email} />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="input-group form-group col-md-6">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><MdLock/></div>
+                                </div>
+                                <input 
+                                    name="password" 
+                                    placeholder="Password" 
+                                    className="form-control" 
+                                    required="required" 
+                                    type="password"
+                                    onChange={this.onValueChange}
+                                    value={this.state.password} readOnly/>
+                            </div>
+                            <div className="input-group form-group col-md-6">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><MdCardTravel/></div>
+                                </div>   
+                                <select name="profession" className="form-control" onChange={this.onValueChange} value={this.state.profession}>
+                                    <option>Choose Profession ...</option>
+                                    <option> Admin</option>
+                                    <option> Senior Lecturer</option>
+                                    <option> Lecturer</option>
+                                    <option> Instructor</option>
+                                    <option> Lab Assistant</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="input-group form-group col-md-6">
+                                <div className="input-group-prepend">
+                                    <div className="input-group-text"><MdPhone/></div>
+                                </div>
+                                <input 
+                                    name="contactNum" 
+                                    placeholder="Contact No." 
+                                    className="form-control" 
+                                    required="required" 
+                                    type="tel" 
+                                    pattern="[0-9]{10}"
+                                    title="Contact Number can only contain 10 digits"
+                                    onChange={this.onValueChange}
+                                    value={this.state.contactNum}/>
+                            </div>
+                            <div className="input-group form-group col-md-6">
+                                <div className=" input-group-prepend">
+                                    <div className="input-group-text"><MdPlace/></div>
+                                </div>
+                            <select name="location" className=" form-control" onChange={this.onValueChange} value={this.state.location}>
+                                <option selected>Choose Location ...</option>
+                                <option> Colombo - Metro</option>
+                                <option> Malabe</option>
+                                <option> Kandy</option>
+                                <option> Jaffna</option>
+                                <option> Matara</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group col-md-12">
+                                    <textarea
+                                        name="response" 
+                                        cols="40" rows="5" 
+                                        className="form-control" 
+                                        placeholder="Responsibilities"
+                                        onChange={this.onValueChange}
+                                        value={this.state.response}></textarea>
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group">
+                                <div className="form-group">
+                                    <div className="form-check">
+                                    <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required />
+                                    <label className="form-check-label" >
+                                        <small>By clicking Submit, you agree to our Terms & Conditions, Visitor Agreement and Privacy Policy.</small>
+                                    </label>
+                                    </div>
+                                </div>
+                        
+                            </div>
+                        </div>
+                        
+                        <div className="form-row" style={{display:'flex',justifyContent:'center'}}>
+                            <button type='submit' className="btn btn-danger" >Save changes</button>
+                            <button type='button' className="btn btn-warning" onClick={this.resetPassword} style={{marginLeft:'25px'}}>Reset Password</button>
+                        </div>
+
+                    </form>
+                </div>
+            )
+        }
     }
 
     newlyUpdated(){
@@ -125,7 +266,8 @@ class Staff_Edit extends Component{
     }
 
     resetPassword(){
-        alert('hello')
+
+        this.setState({pending:true})
 
         let a = "",
             b = "abcdefghijklmnopqrstuvwxyz1234567890",
@@ -169,13 +311,32 @@ class Staff_Edit extends Component{
                     //     location:'',
                     //     response:''});
 
+                    if(res.data.MAIL=='Successfully Sent'){
+                        this.setState({pending:false})
+                        Swal.fire(
+                            'Good job!',
+                            'You clicked the button!',
+                            'success'
+                          )
+
+                        setTimeout(()=>{
+                            this.props.history.push('/staff/view')
+                        },1500);
+                    }
+                    else{
+                        Swal.fire(
+                            'The Internet?',
+                            'That thing is still around?',
+                            'question'
+                          )
+                    }
+                    
+
                 },
                 err=>console.log(err)
             )
         
-        setTimeout(()=>{
-            this.props.history.push('/staff/view')
-        },1500);
+        
         });
     }
 
@@ -204,128 +365,8 @@ class Staff_Edit extends Component{
                                 </div>
 
                                 {/* form section */}
-                                <div className="col-md-8 py-5 border">
-                                    <h4 className="pb-4">Please Fill Staff Member details</h4>
-                                    <form id='staffForm' onSubmit={this.onFormSubmit}>
-                                        <div className="form-row">
-                                            <div className="input-group form-group col-md-6">
-                                            <div className="input-group-prepend">
-                                                <div className="input-group-text"><MdPerson/></div>
-                                            </div>
-                                            <input 
-                                                name="fullName" 
-                                                placeholder="Full Name" 
-                                                className="form-control" 
-                                                type="text"
-                                                pattern="[A-Za-z ]{1,}"
-                                                onChange={this.onValueChange}
-                                                value={this.state.fullName} />
-                                            </div>
-                                        <div className="input-group form-group col-md-6">
-                                            <div className="input-group-prepend">
-                                                <div className="input-group-text"><MdEmail/></div>
-                                            </div>
-                                            <input 
-                                                name="email" 
-                                                placeholder="Email"
-                                                className="form-control"
-                                                type="email"
-                                                pattern="/^[a-z0-9_]{*}+@[a-z0-9]{*}+.[a-z]{2,4}$/"
-                                                title="Email field not matched"
-                                                onChange={this.onValueChange}
-                                                value={this.state.email} />
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="input-group form-group col-md-6">
-                                                <div className="input-group-prepend">
-                                                    <div className="input-group-text"><MdLock/></div>
-                                                </div>
-                                                <input 
-                                                    name="password" 
-                                                    placeholder="Password" 
-                                                    className="form-control" 
-                                                    required="required" 
-                                                    type="password"
-                                                    onChange={this.onValueChange}
-                                                    value={this.state.password} readOnly/>
-                                            </div>
-                                            <div className="input-group form-group col-md-6">
-                                                <div className="input-group-prepend">
-                                                    <div className="input-group-text"><MdCardTravel/></div>
-                                                </div>   
-                                                <select name="profession" className="form-control" onChange={this.onValueChange} value={this.state.profession}>
-                                                    <option>Choose Profession ...</option>
-                                                    <option> Admin</option>
-                                                    <option> Senior Lecturer</option>
-                                                    <option> Lecturer</option>
-                                                    <option> Instructor</option>
-                                                    <option> Lab Assistant</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="input-group form-group col-md-6">
-                                                <div className="input-group-prepend">
-                                                    <div className="input-group-text"><MdPhone/></div>
-                                                </div>
-                                                <input 
-                                                    name="contactNum" 
-                                                    placeholder="Contact No." 
-                                                    className="form-control" 
-                                                    required="required" 
-                                                    type="tel" 
-                                                    pattern="[0-9]{10}"
-                                                    title="Contact Number can only contain 10 digits"
-                                                    onChange={this.onValueChange}
-                                                    value={this.state.contactNum}/>
-                                            </div>
-                                            <div className="input-group form-group col-md-6">
-                                                <div className=" input-group-prepend">
-                                                    <div className="input-group-text"><MdPlace/></div>
-                                                </div>
-                                            <select name="location" className=" form-control" onChange={this.onValueChange} value={this.state.location}>
-                                                <option selected>Choose Location ...</option>
-                                                <option> Colombo - Metro</option>
-                                                <option> Malabe</option>
-                                                <option> Kandy</option>
-                                                <option> Jaffna</option>
-                                                <option> Matara</option>
-                                            </select>
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="form-group col-md-12">
-                                                    <textarea
-                                                        name="response" 
-                                                        cols="40" rows="5" 
-                                                        className="form-control" 
-                                                        placeholder="Responsibilities"
-                                                        onChange={this.onValueChange}
-                                                        value={this.state.response}></textarea>
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="form-group">
-                                                <div className="form-group">
-                                                    <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required />
-                                                    <label className="form-check-label" >
-                                                        <small>By clicking Submit, you agree to our Terms & Conditions, Visitor Agreement and Privacy Policy.</small>
-                                                    </label>
-                                                    </div>
-                                                </div>
-                                        
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="form-row" style={{display:'flex',justifyContent:'center'}}>
-                                            <button type='submit' className="btn btn-danger" >Save changes</button>
-                                            <button type='button' className="btn btn-warning" onClick={this.resetPassword} style={{marginLeft:'25px'}}>Reset Password</button>
-                                        </div>
+                                {this.checkVisible()}
 
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     
