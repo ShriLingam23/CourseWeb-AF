@@ -1,13 +1,11 @@
 import React,{Component} from 'react';
 import { Button } from 'reactstrap';
 import axios from 'axios';
-// import {Link} from 'react-router-dom';
+
 import {IoIosEye} from 'react-icons/io'
 import {IoIosCloseCircleOutline} from 'react-icons/io'
 
 import ModalImage from 'react-modal-image'
- 
-
 
 class Notice_Row extends Component{
 
@@ -37,7 +35,7 @@ class Notice_Row extends Component{
     }
 
     onDelete(){
-        axios.delete('http://localhost:4000/file/uploadfile/'+this.state.image._id)
+        axios.delete('http://localhost:4000/admin/file/uploadfile/'+this.state.image._id)
             .then(
                 res => {
                     console.log(res.data)
